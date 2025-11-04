@@ -4,18 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Grupo Tecnolap EIRL — Equipos de Cómputo, Impresoras y CCTV</title>
-  <meta name="description" content="Catálogo de laptops, PCs, impresoras y CCTV. Instalación, mantenimiento y soporte técnico en Lima y provincias. Cotiza por WhatsApp." />
-  <meta property="og:title" content="Grupo Tecnolap EIRL" />
-  <meta property="og:description" content="Venta de laptops, PCs, impresoras, CCTV y soporte técnico en Lima y provincias." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://tudominio.com" />
+  <meta name="description" content="Laptops, impresoras, CCTV, UPS y soporte técnico. Cotiza por WhatsApp." />
   <link rel="icon" href="/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#0b1020; --card:#0f1530; --muted:#8ea0bf; --text:#eaf1ff; --brand:#4fc3f7; --brand-2:#7c4dff; --ok:#18d47b;
+      --bg:#0b1020; --card:#0f1530; --muted:#8ea0bf; --text:#eaf1ff;
+      --brand:#4fc3f7; --brand-2:#7c4dff; --ok:#18d47b;
       --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35);
     }
     *{box-sizing:border-box}
@@ -24,24 +21,27 @@
                color:var(--text);font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif}
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:24px}
+
+    /* Nav */
     header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(11,16,32,.9),rgba(11,16,32,.6));backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
     .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
     .brand{display:flex;align-items:center;gap:12px}
     .logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:var(--shadow);font-weight:800}
     nav a{opacity:.9;margin-left:18px}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand-2));
-         color:#061019;font-weight:700;box-shadow:var(--shadow)}
-    .pill{border:1px solid rgba(255,255,255,.15);padding:8px 12px;border-radius:999px;color:var(--muted)}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#061019;font-weight:700;box-shadow:var(--shadow);border:0;cursor:pointer}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.15);background:transparent;color:var(--text);cursor:pointer}
+    .badge{display:inline-grid;place-items:center;min-width:18px;height:18px;border-radius:10px;background:#fff;color:#000;font-size:11px;padding:0 6px}
 
+    /* Layouts */
     .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;margin-top:18px}
     .hero h1{font-size:clamp(28px,5vw,48px);line-height:1.05;margin:0 0 10px}
     .hero p{color:var(--muted);margin:0 0 18px}
     .kpis{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
     .kpis .item{background:#0f1530;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:10px 14px;color:var(--muted)}
-
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-          border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .mini{font-size:12px;color:var(--muted)}
+    .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
 
     /* Carousel */
     .carousel{position:relative;height:340px;border-radius:16px;overflow:hidden}
@@ -52,19 +52,49 @@
     .dots button{width:9px;height:9px;border-radius:50%;border:0;background:rgba(255,255,255,.45);cursor:pointer}
     .dots button.active{background:#fff}
 
-    /* Tabs */
+    /* Tabs + productos */
     .tabs{display:flex;gap:10px;flex-wrap:wrap}
-    .tab{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.15);cursor:pointer;color:var(--muted)}
+    .tab{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.15);cursor:pointer;color:var(--muted);background:transparent}
     .tab.active{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#061019;border-color:transparent;font-weight:700}
-
-    .products{margin-top:12px}
     .products .item img{width:100%;height:160px;object-fit:cover;border-radius:14px}
     .products .item h3{margin:10px 0 4px;font-size:18px}
-    .mini{font-size:12px;color:var(--muted)}
 
-    .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+    /* Modal producto */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:200}
+    .modal.open{display:flex}
+    .modal__overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(2px)}
+    .modal__box{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:18px;
+      width:min(100%,980px);background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+    .modal__close{position:absolute;top:8px;right:8px;border:0;background:transparent;color:var(--text);font-size:20px;cursor:pointer;opacity:.8}
+    .modal__left{min-height:360px}
+    .gallery{position:relative;border-radius:14px;overflow:hidden;background:#0a0f1f}
+    .gallery img{width:100%;height:360px;object-fit:cover;display:block}
+    .galBtn{position:absolute;top:50%;transform:translateY(-50%);border:0;background:rgba(0,0,0,.35);color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer}
+    .galPrev{left:8px}.galNext{right:8px}
+    .thumbs{display:flex;gap:8px;margin-top:8px;overflow:auto}
+    .thumbs img{width:64px;height:48px;object-fit:cover;border-radius:8px;opacity:.7;cursor:pointer;border:1px solid rgba(255,255,255,.15)}
+    .thumbs img.active{opacity:1;border-color:#fff}
+    .modal__right h3{margin:0 0 2px}
+
+    /* Drawer carrito */
+    .drawerOverlay{position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.2s;z-index:220}
+    .drawerOverlay.open{opacity:1;pointer-events:auto}
+    .drawer{position:fixed;top:0;right:-420px;width:380px;max-width:90vw;height:100vh;background:var(--card);
+      border-left:1px solid rgba(255,255,255,.1);box-shadow:var(--shadow);padding:16px;z-index:221;transition:right .25s ease}
+    .drawer.open{right:0}
+    .cartHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .cartList{display:flex;flex-direction:column;gap:10px;max-height:55vh;overflow:auto;margin:10px 0}
+    .cartItem{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:8px}
+    .cartItem img{width:64px;height:48px;object-fit:cover;border-radius:8px}
+    .qty{display:inline-flex;align-items:center;border:1px solid rgba(255,255,255,.15);border-radius:999px}
+    .qty button{border:0;background:transparent;color:#fff;width:28px;height:28px;cursor:pointer}
+    .qty span{display:inline-block;min-width:26px;text-align:center}
+    .cartFoot{border-top:1px solid rgba(255,255,255,.12);padding-top:10px;display:grid;gap:10px}
+    .row{display:flex;justify-content:space-between;align-items:center}
+    .del{border:0;background:transparent;color:#f88;cursor:pointer}
+    .empty{color:var(--muted);text-align:center;margin:30px 0}
+
     footer{margin:40px 0 20px;color:var(--muted);text-align:center}
-
     @media (max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}}
     @media (max-width:620px){.grid{grid-template-columns:1fr}.carousel{height:240px}}
   </style>
@@ -83,6 +113,7 @@
         <a href="#catalogo">Catálogo</a>
         <a href="#servicios">Servicios</a>
         <a href="#contacto" class="pill">Contacto</a>
+        <button id="btnCart" class="pill">🛒 Carrito <span id="cartCount" class="badge">0</span></button>
       </nav>
     </div>
   </header>
@@ -106,24 +137,23 @@
       <div class="card">
         <div class="carousel" id="carousel">
           <div class="slide active"><img src="img/hero-1.jpg" alt="Laptop empresarial" onerror="this.src='https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop'"/></div>
-          <div class="slide"><img src="img/hero-2.jpg" alt="Impresoras tanque de tinta" onerror="this.src='https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1200&auto=format&fit=crop'"/></div>
+          <div class="slide"><img src="img/hero-2.jpg" alt="Impresoras" onerror="this.src='https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1200&auto=format&fit=crop'"/></div>
           <div class="slide"><img src="img/hero-3.jpg" alt="Cámaras de seguridad" onerror="this.src='https://images.unsplash.com/photo-1581726707445-75cbe9d70a41?q=80&w=1200&auto=format&fit=crop'"/></div>
           <div class="dots" id="dots"></div>
         </div>
       </div>
     </section>
 
-    <!-- CATALOGO CON TABS -->
+    <!-- CATALOGO -->
     <section id="catalogo" style="margin-top:26px">
       <h2>Catálogo</h2>
       <div class="tabs" id="tabs">
-        <button class="tab active" data-cat="todo">Todo</button>
-        <button class="tab" data-cat="laptops">Laptops</button>
-        <button class="tab" data-cat="impresoras">Impresoras</button>
-        <button class="tab" data-cat="cctv">Cámaras & CCTV</button>
-        <button class="tab" data-cat="ups">UPS</button>
+        <button type="button" class="tab active" data-cat="todo">Todo</button>
+        <button type="button" class="tab" data-cat="laptops">Laptops</button>
+        <button type="button" class="tab" data-cat="impresoras">Impresoras</button>
+        <button type="button" class="tab" data-cat="cctv">Cámaras & CCTV</button>
+        <button type="button" class="tab" data-cat="ups">UPS</button>
       </div>
-
       <div class="grid products" id="productGrid"></div>
     </section>
 
@@ -157,76 +187,207 @@
     © <span id="y"></span> Grupo Tecnolap EIRL · RUC 20XXXXXXXXX · Todos los derechos reservados
   </footer>
 
-  <script>
-    // ====== CONFIGURA AQUI TU WHATSAPP, TELEFONO Y EMAIL ======
-    const WA_PHONE = '51999999999'; // sólo números con código de país 51
-    const TEL_SHOW = '+51 999 999 999';
-    const MAIL = 'ventas@tudominio.com';
+  <!-- MODAL PRODUCTO -->
+  <div id="productModal" class="modal">
+    <div class="modal__overlay" onclick="closeProduct()"></div>
+    <div class="modal__box">
+      <button class="modal__close" aria-label="Cerrar" onclick="closeProduct()">✕</button>
+      <div class="modal__left">
+        <div class="gallery" id="gal">
+          <img id="galMain" src="" alt="" />
+          <button class="galBtn galPrev" onclick="galPrev()" aria-label="Anterior">‹</button>
+          <button class="galBtn galNext" onclick="galNext()" aria-label="Siguiente">›</button>
+        </div>
+        <div class="thumbs" id="galThumbs"></div>
+      </div>
+      <div class="modal__right">
+        <h3 id="pdName"></h3>
+        <div class="mini" id="pdCat"></div>
+        <div style="font-weight:800;margin:6px 0 10px" id="pdPrice"></div>
+        <p id="pdDetalles"></p>
+        <ul id="pdSpecs" class="mini" style="margin:10px 0 16px;line-height:1.5"></ul>
+        <div class="cta">
+          <button class="btn" id="pdAdd">Agregar al carrito</button>
+          <a class="pill" id="pdWA" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    document.getElementById('telMostrar').textContent = TEL_SHOW;
-    document.getElementById('mailMostrar').textContent = MAIL;
+  <!-- DRAWER CARRITO -->
+  <div id="drawerOverlay" class="drawerOverlay"></div>
+  <aside id="cartDrawer" class="drawer">
+    <div class="cartHead">
+      <strong>🛒 Carrito</strong>
+      <button class="pill" id="btnCloseCart">Cerrar</button>
+    </div>
+    <div id="cartList" class="cartList"></div>
+    <div class="cartFoot">
+      <div class="row"><span>Subtotal</span><strong id="cartSubtotal">S/ 0</strong></div>
+      <div class="row"><span>IGV (18%)</span><strong id="cartIGV">S/ 0</strong></div>
+      <div class="row"><span>Total</span><strong id="cartTotal">S/ 0</strong></div>
+      <button id="btnCheckout" class="btn">Finalizar por WhatsApp</button>
+      <button id="btnClear" class="pill">Vaciar carrito</button>
+    </div>
+  </aside>
 
-    function waLink(msg='Hola Tecnolap, quiero una cotización'){ 
-      return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(msg)}`; 
-    }
-    document.getElementById('cta-whatsapp').href = waLink();
-    document.getElementById('cta-whatsapp-2').href = waLink();
+    <script>
+  // ====== CONFIGURA AQUI TU CONTACTO ======
+  const WA_PHONE = '51999999999'; // solo números, con 51
+  const TEL_SHOW = '+51 999 999 999';
+  const MAIL = 'ventas@tudominio.com';
 
-    // ====== CAROUSEL (pasarela) ======
-    const slides = Array.from(document.querySelectorAll('.slide'));
-    const dotsWrap = document.getElementById('dots');
-    slides.forEach((_,i)=>{ const b=document.createElement('button'); b.addEventListener('click',()=>show(i,true)); dotsWrap.appendChild(b); });
-    const dots = Array.from(dotsWrap.querySelectorAll('button'));
-    let idx = 0, timer=null;
-    function show(i,manual=false){
-      idx = i;
-      slides.forEach((s,j)=>s.classList.toggle('active', j===i));
-      dots.forEach((d,j)=>d.classList.toggle('active', j===i));
-      if(manual){ resetAuto(); }
-    }
-    function next(){ show((idx+1)%slides.length); }
-    function resetAuto(){ clearInterval(timer); timer=setInterval(next, 4000); }
-    show(0); resetAuto();
+  document.getElementById('telMostrar').textContent = TEL_SHOW;
+  document.getElementById('mailMostrar').textContent = MAIL;
+  function waLink(msg='Hola Tecnolap, quiero una cotización'){ return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(msg)}`; }
+  document.getElementById('cta-whatsapp').href = waLink();
+  document.getElementById('cta-whatsapp-2').href = waLink();
 
-    // ====== CATALOGO DINAMICO + TABS ======
-    const products = [
-      {id:'lap-001', nombre:'Laptop Core i5 · 16GB · 512GB SSD', cat:'laptops', precio:'S/ 2,599', img:'img/laptops-1.jpg', desc:'Ideal oficina/estudio. 14" FHD.'},
-      {id:'lap-002', nombre:'Laptop Ryzen 5 · 16GB · 512GB', cat:'laptops', precio:'S/ 2,399', img:'img/laptops-2.jpg', desc:'Productividad y diseño. 15.6".'},
-      {id:'imp-001', nombre:'Impresora Epson L3250 (tanque)', cat:'impresoras', precio:'S/ 799', img:'img/imp-1.jpg', desc:'Multifunción, Wi‑Fi, bajo costo por página.'},
-      {id:'imp-002', nombre:'HP Laser 107w', cat:'impresoras', precio:'S/ 449', img:'img/imp-2.jpg', desc:'Láser monocromo compacta con Wi‑Fi.'},
-      {id:'cctv-001', nombre:'Kit Hikvision 4 cámaras 1080p', cat:'cctv', precio:'S/ 1,899', img:'img/cctv-1.jpg', desc:'Incluye DVR y accesorios básicos.'},
-      {id:'ups-001', nombre:'UPS 1200VA Interactiva', cat:'ups', precio:'S/ 329', img:'img/ups-1.jpg', desc:'Protección para PC e impresoras.'}
-    ];
+  // ====== UTIL ======
+  const fmt = n => 'S/ ' + n.toLocaleString('es-PE', {maximumFractionDigits:2});
+  const byId = id => document.getElementById(id);
+  document.getElementById('y').textContent=new Date().getFullYear();
 
-    const grid = document.getElementById('productGrid');
-    function card(p){
-      return `<div class="card item">
-        <img src="${p.img}" alt="${p.nombre}" onerror="this.src='https://picsum.photos/seed/${p.id}/800/500'"/>
-        <h3>${p.nombre}</h3>
-        <div class="mini">${p.desc || ''}</div>
-        <div class="cta" style="justify-content:space-between;align-items:center">
-          <span style="opacity:.9;font-weight:700">${p.precio}</span>
-          <a class="pill" href="${waLink('Hola, me interesa '+p.nombre+' ('+p.precio+')')}" target="_blank" rel="noopener">Cotizar</a>
+  // ====== CAROUSEL HERO ======
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.getElementById('dots');
+  slides.forEach((_,i)=>{ const b=document.createElement('button'); b.addEventListener('click',()=>show(i,true)); dotsWrap.appendChild(b); });
+  const dots = Array.from(dotsWrap.querySelectorAll('button')); let idx = 0, timer=null;
+  function show(i,manual=false){ idx = i; slides.forEach((s,j)=>s.classList.toggle('active', j===i)); dots.forEach((d,j)=>d.classList.toggle('active', j===i)); if(manual){ resetAuto(); } }
+  function next(){ show((idx+1)%slides.length); } function resetAuto(){ clearInterval(timer); timer=setInterval(next, 4000); } show(0); resetAuto();
+
+  // ====== CATALOGO (datos de ejemplo, cambia cuando quieras) ======
+  const products = [
+    {id:'lap-001', cat:'laptops', nombre:'Laptop Core i5 · 16GB · 512GB SSD', precioNum:2599, precio:'S/ 2,599', img:'img/laptops-1.jpg', imgs:['img/laptops-1.jpg','img/laptops-2.jpg','img/hero-1.jpg'], desc:'Ideal oficina/estudio. 14" FHD.', detalles:'Rendimiento sólido para ofimática, estudios y navegación.', specs:['Intel Core i5','16GB RAM','512GB SSD','Pantalla 14" FHD','Wi-Fi AC','Windows 11']},
+    {id:'lap-002', cat:'laptops', nombre:'Laptop Ryzen 5 · 16GB · 512GB', precioNum:2399, precio:'S/ 2,399', img:'img/laptops-2.jpg', imgs:['img/laptops-2.jpg','img/hero-1.jpg'], desc:'Productividad y diseño. 15.6".', detalles:'Excelente multitarea y autonomía.', specs:['Ryzen 5','16GB RAM','512GB SSD','15.6" FHD','Wi-Fi AX','Windows 11']},
+    {id:'imp-001', cat:'impresoras', nombre:'Impresora Epson L3250 (tanque)', precioNum:799, precio:'S/ 799', img:'img/imp-1.jpg', imgs:['img/imp-1.jpg','img/hero-2.jpg'], desc:'Multifunción, Wi-Fi, bajo costo por página.', detalles:'Ideal para oficinas con alto volumen.', specs:['Multifunción','Wi-Fi','Tanque de tinta']},
+    {id:'imp-002', cat:'impresoras', nombre:'HP Laser 107w', precioNum:449, precio:'S/ 449', img:'img/imp-2.jpg', imgs:['img/imp-2.jpg','img/hero-2.jpg'], desc:'Láser monocromo compacta con Wi-Fi.', detalles:'Rápida y compacta para documentos B/N.', specs:['Láser B/N','Wi-Fi','Compacta']},
+    {id:'cctv-001', cat:'cctv', nombre:'Kit Hikvision 4 cámaras 1080p', precioNum:1899, precio:'S/ 1,899', img:'img/cctv-1.jpg', imgs:['img/cctv-1.jpg','img/hero-3.jpg'], desc:'Incluye DVR y accesorios básicos.', detalles:'Solución lista para instalar y monitorear.', specs:['4 cámaras 1080p','DVR','Accesorios','App móvil']},
+    {id:'ups-001', cat:'ups', nombre:'UPS 1200VA Interactiva', precioNum:329, precio:'S/ 329', img:'img/ups-1.jpg', imgs:['img/ups-1.jpg'], desc:'Protección para PC e impresoras.', detalles:'Protege de cortes y picos.', specs:['1200VA','AVR','Varias tomas']}
+  ];
+  const P = Object.fromEntries(products.map(p=>[p.id,p]));
+
+  // ====== RENDER TARJETAS + TABS ======
+  const grid = byId('productGrid');
+  function card(p){
+    return `<div class="card item">
+      <img src="${p.img}" alt="${p.nombre}" onerror="this.src='https://picsum.photos/seed/${p.id}/800/500'"/>
+      <h3>${p.nombre}</h3>
+      <div class="mini">${p.desc || ''}</div>
+      <div class="cta" style="justify-content:space-between;align-items:center">
+        <span style="opacity:.9;font-weight:700">${p.precio}</span>
+        <div style="display:flex;gap:8px">
+          <button type="button" class="pill" onclick="openProduct('${p.id}')">Ver detalles</button>
+          <button type="button" class="pill" onclick="addToCart('${p.id}')">Agregar</button>
+        </div>
+      </div>
+    </div>`;
+  }
+  function render(cat='todo'){ const list = (cat==='todo')? products : products.filter(p=>p.cat===cat); grid.innerHTML = list.map(card).join(''); }
+  render();
+  const tabsEl = document.getElementById('tabs');
+  tabsEl.querySelectorAll('.tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabsEl.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      render(btn.dataset.cat);
+    });
+  });
+
+  // ====== MODAL PRODUCTO (galería + WA + agregar) ======
+  let CURRENT=null, GALIDX=0;
+  function openProduct(id){
+    const p = P[id]; if(!p) return; CURRENT=p;
+    byId('pdName').textContent = p.nombre;
+    byId('pdCat').textContent = ({laptops:'Laptops',impresoras:'Impresoras',cctv:'Cámaras & CCTV',ups:'UPS'})[p.cat]||'';
+    byId('pdPrice').textContent = p.precio;
+    byId('pdDetalles').textContent = p.detalles||'';
+    byId('pdSpecs').innerHTML = (p.specs||[]).map(s=>`<li>• ${s}</li>`).join('');
+    byId('pdWA').href = waLink(`Hola, me interesa ${p.nombre} (${p.precio}). ¿Disponibilidad y entrega?`);
+    byId('pdAdd').onclick = ()=>addToCart(p.id, 1, true);
+
+    const imgs = (p.imgs && p.imgs.length) ? p.imgs : [p.img];
+    GALIDX=0; const main=byId('galMain'), thumbs=byId('galThumbs');
+    function set(i){ GALIDX=i; main.src=imgs[i]; thumbs.querySelectorAll('img').forEach((t,idx)=>t.classList.toggle('active', idx===i)); }
+    thumbs.innerHTML = imgs.map((src,i)=>`<img src="${src}" alt="thumb ${i+1}" ${i===0?'class="active"':''} />`).join('');
+    thumbs.querySelectorAll('img').forEach((el,i)=>el.addEventListener('click', ()=>set(i)));
+    set(0);
+
+    byId('productModal').classList.add('open'); document.body.style.overflow='hidden';
+  }
+  function closeProduct(){ byId('productModal').classList.remove('open'); document.body.style.overflow=''; CURRENT=null; }
+  function galPrev(){ if(!CURRENT) return; const imgs=(CURRENT.imgs&&CURRENT.imgs.length)?CURRENT.imgs:[CURRENT.img]; GALIDX=(GALIDX-1+imgs.length)%imgs.length; byId('galMain').src=imgs[GALIDX]; document.querySelectorAll('#galThumbs img').forEach((t,idx)=>t.classList.toggle('active', idx===GALIDX)); }
+  function galNext(){ if(!CURRENT) return; const imgs=(CURRENT.imgs&&CURRENT.imgs.length)?CURRENT.imgs:[CURRENT.img]; GALIDX=(GALIDX+1)%imgs.length; byId('galMain').src=imgs[GALIDX]; document.querySelectorAll('#galThumbs img').forEach((t,idx)=>t.classList.toggle('active', idx===GALIDX)); }
+  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeProduct(); });
+
+  // ====== CARRITO (localStorage + drawer + checkout WA) ======
+  const CART_KEY='tecnolap_cart_v1';
+  let cart = JSON.parse(localStorage.getItem(CART_KEY)||'[]'); // [{id,qty}]
+  const saveCart=()=>localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  const countCart=()=>cart.reduce((a,c)=>a+c.qty,0);
+  const subtotal=()=>cart.reduce((a,c)=>a+(P[c.id]?.precioNum||0)*c.qty,0);
+
+  function addToCart(id, qty=1, fromModal=false){
+    const p=P[id]; if(!p) return;
+    const it = cart.find(x=>x.id===id); if(it) it.qty+=qty; else cart.push({id,qty});
+    saveCart(); renderCart(); if(fromModal) closeProduct(); openCart();
+  }
+  function removeFromCart(id){ cart=cart.filter(x=>x.id!==id); saveCart(); renderCart(); }
+  function setQty(id, q){ const it=cart.find(x=>x.id===id); if(!it) return; it.qty=q<1?1:q; saveCart(); renderCart(); }
+
+  const drawer = byId('cartDrawer'), overlay=byId('drawerOverlay');
+  function openCart(){ drawer.classList.add('open'); overlay.classList.add('open'); }
+  function closeCart(){ drawer.classList.remove('open'); overlay.classList.remove('open'); }
+  byId('btnCart').onclick=openCart; byId('btnCloseCart').onclick=closeCart; overlay.onclick=closeCart;
+
+  function renderCart(){
+    byId('cartCount').textContent = countCart();
+    const wrap = byId('cartList');
+    if(cart.length===0){ wrap.innerHTML = `<div class="empty">Tu carrito está vacío.</div>`; byId('cartSubtotal').textContent=fmt(0); byId('cartIGV').textContent=fmt(0); byId('cartTotal').textContent=fmt(0); return; }
+    wrap.innerHTML = cart.map(c=>{
+      const p=P[c.id]; if(!p) return '';
+      return `<div class="cartItem">
+        <img src="${p.img}" alt="${p.nombre}" onerror="this.src='https://picsum.photos/seed/${p.id}/160/100'"/>
+        <div>
+          <div style="font-weight:700">${p.nombre}</div>
+          <div class="mini">${p.precio}</div>
+          <div class="qty" style="margin-top:6px">
+            <button onclick="setQty('${c.id}', ${c.qty-1})">−</button>
+            <span>${c.qty}</span>
+            <button onclick="setQty('${c.id}', ${c.qty+1})">+</button>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div>${fmt((p.precioNum||0)*c.qty)}</div>
+          <button class="del" onclick="removeFromCart('${c.id}')">Quitar</button>
         </div>
       </div>`;
-    }
+    }).join('');
+    const sub = subtotal(); const igv = sub*0.18; const tot = sub+igv;
+    byId('cartSubtotal').textContent = fmt(sub);
+    byId('cartIGV').textContent = fmt(igv);
+    byId('cartTotal').textContent = fmt(tot);
+  }
+  renderCart();
 
-    function render(cat='todo'){
-      const list = (cat==='todo')? products : products.filter(p=>p.cat===cat);
-      grid.innerHTML = list.map(card).join('');
-    }
-    render();
+  // Vaciar + Checkout
+  byId('btnClear').onclick = ()=>{ cart=[]; saveCart(); renderCart(); };
+  byId('btnCheckout').onclick = ()=>{
+    if(cart.length===0) return;
+    const lines = cart.map(c=>{
+      const p=P[c.id]; const s=fmt((p.precioNum||0)*c.qty);
+      return `• ${p?.nombre} x${c.qty} — ${s}`;
+    }).join('%0A');
+    const msg = `Hola, quiero comprar:%0A${lines}%0A%0ATotal carrito: ${byId('cartTotal').textContent}%0A¿Opciones de pago y entrega (Lima/Provincias)?`;
+    window.open(waLink(msg), '_blank');
+  };
 
-    document.getElementById('tabs').addEventListener('click', (e)=>{
-      const b = e.target.closest('.tab'); if(!b) return;
-      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-      b.classList.add('active');
-      render(b.dataset.cat);
-    });
+  // Enviar email CTA
+  document.getElementById('cta-mail').href = `mailto:${MAIL}?subject=Cotización%20Tecnolap&body=Hola,%20necesito%20cotización.`;
 
-    // Año footer
-    document.getElementById('y').textContent=new Date().getFullYear();
+  // Abrir producto por hash #p=lap-001
+  function checkHash(){ const m=location.hash.match(/#p=([a-z0-9-]+)/i); if(m) openProduct(m[1]); }
+  window.addEventListener('hashchange', checkHash); checkHash();
   </script>
 </body>
 </html>
-
