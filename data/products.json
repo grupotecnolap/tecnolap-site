@@ -1,0 +1,86 @@
+[
+  {
+    "id": "lap-001",
+    "cat": "laptops",
+    "nombre": "Laptop Core i5 · 16GB · 512GB SSD",
+    "precioNum": 2599,
+    "precio": "S/ 2,599",
+    "img": "img/laptops-1.jpg",
+    "imgs": ["img/laptops-1.jpg", "img/hero-1.jpg"],
+    "desc": "Ideal oficina/estudio. 14\" FHD.",
+    "detalles": "Rendimiento sólido para ofimática y estudio.",
+    "specs": ["Intel Core i5","16GB RAM","512GB SSD","14\" FHD","Wi-Fi AC","Windows 11"]
+  },
+  {
+    "id": "lap-002",
+    "cat": "laptops",
+    "nombre": "Laptop Ryzen 5 · 16GB · 512GB",
+    "precioNum": 2399,
+    "precio": "S/ 2,399",
+    "img": "img/laptops-2.jpg",
+    "imgs": ["img/laptops-2.jpg","img/hero-1.jpg"],
+    "desc": "Productividad y diseño. 15.6\".",
+    "detalles": "Excelente multitarea y autonomía.",
+    "specs": ["Ryzen 5","16GB RAM","512GB SSD","15.6\" FHD","Wi-Fi 6","Windows 11"]
+  },
+  {
+    "id": "ref-001",
+    "cat": "refurb",
+    "nombre": "Laptop Refurb Dell i5 · 8GB · 256GB",
+    "precioNum": 1299,
+    "precio": "S/ 1,299",
+    "img": "img/ref-dell-1.jpg",
+    "imgs": ["img/ref-dell-1.jpg","img/ref-dell-2.jpg"],
+    "desc": "Equipo reacondicionado grado A.",
+    "detalles": "Incluye cargador. Garantía 3 meses.",
+    "specs": ["Intel Core i5 8va gen","8GB RAM","256GB SSD","14\" FHD","Windows 11 Pro"]
+  },
+  {
+    "id": "imp-001",
+    "cat": "impresoras",
+    "nombre": "Impresora Epson L3250 (tanque)",
+    "precioNum": 799,
+    "precio": "S/ 799",
+    "img": "img/imp-1.jpg",
+    "imgs": ["img/imp-1.jpg","img/hero-2.jpg"],
+    "desc": "Multifunción Wi-Fi, bajo costo por página.",
+    "detalles": "Ideal para oficinas con alto volumen.",
+    "specs": ["Multifunción","Wi-Fi","Tanque de tinta"]
+  },
+  {
+    "id": "imp-002",
+    "cat": "impresoras",
+    "nombre": "HP Laser 107w",
+    "precioNum": 449,
+    "precio": "S/ 449",
+    "img": "img/imp-2.jpg",
+    "imgs": ["img/imp-2.jpg","img/hero-2.jpg"],
+    "desc": "Láser monocromo compacta con Wi-Fi.",
+    "detalles": "Rápida y compacta para documentos.",
+    "specs": ["Láser B/N","Wi-Fi","Compacta"]
+  },
+  {
+    "id": "cctv-001",
+    "cat": "cctv",
+    "nombre": "Kit Hikvision 4 cámaras 1080p",
+    "precioNum": 1899,
+    "precio": "S/ 1,899",
+    "img": "img/cctv-1.jpg",
+    "imgs": ["img/cctv-1.jpg","img/hero-3.jpg"],
+    "desc": "Incluye DVR y accesorios básicos.",
+    "detalles": "Listo para instalar y monitorear.",
+    "specs": ["4 cámaras 1080p","DVR","Accesorios","App móvil"]
+  },
+  {
+    "id": "ups-001",
+    "cat": "ups",
+    "nombre": "UPS 1200VA Interactiva",
+    "precioNum": 329,
+    "precio": "S/ 329",
+    "img": "img/ups-1.jpg",
+    "imgs": ["img/ups-1.jpg"],
+    "desc": "Protección para PC e impresoras.",
+    "detalles": "Protege de cortes y picos.",
+    "specs": ["1200VA","AVR","Varias tomas"]
+  }
+]

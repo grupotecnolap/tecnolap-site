@@ -16,9 +16,14 @@
       --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35);
     }
     *{box-sizing:border-box}
-    html,body{margin:0;background:radial-gradient(1200px 600px at 10% -10%, rgba(79,195,247,.25), transparent 60%),
-                         radial-gradient(1200px 600px at 110% 10%, rgba(124,77,255,.22), transparent 60%), var(--bg);
-               color:var(--text);font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif}
+    html,body{
+      margin:0;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(79,195,247,.25), transparent 60%),
+        radial-gradient(1200px 600px at 110% 10%, rgba(124,77,255,.22), transparent 60%),
+        var(--bg);
+      color:var(--text);font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif
+    }
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:24px}
 
@@ -63,8 +68,7 @@
     .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:200}
     .modal.open{display:flex}
     .modal__overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(2px)}
-    .modal__box{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:18px;
-      width:min(100%,980px);background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+    .modal__box{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:18px;width:min(100%,980px);background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
     .modal__close{position:absolute;top:8px;right:8px;border:0;background:transparent;color:var(--text);font-size:20px;cursor:pointer;opacity:.8}
     .modal__left{min-height:360px}
     .gallery{position:relative;border-radius:14px;overflow:hidden;background:#0a0f1f}
@@ -79,8 +83,7 @@
     /* Drawer carrito */
     .drawerOverlay{position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.2s;z-index:220}
     .drawerOverlay.open{opacity:1;pointer-events:auto}
-    .drawer{position:fixed;top:0;right:-420px;width:380px;max-width:90vw;height:100vh;background:var(--card);
-      border-left:1px solid rgba(255,255,255,.1);box-shadow:var(--shadow);padding:16px;z-index:221;transition:right .25s ease}
+    .drawer{position:fixed;top:0;right:-420px;width:380px;max-width:90vw;height:100vh;background:var(--card);border-left:1px solid rgba(255,255,255,.1);box-shadow:var(--shadow);padding:16px;z-index:221;transition:right .25s ease}
     .drawer.open{right:0}
     .cartHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
     .cartList{display:flex;flex-direction:column;gap:10px;max-height:55vh;overflow:auto;margin:10px 0}
@@ -150,6 +153,7 @@
       <div class="tabs" id="tabs">
         <button type="button" class="tab active" data-cat="todo">Todo</button>
         <button type="button" class="tab" data-cat="laptops">Laptops</button>
+        <button type="button" class="tab" data-cat="refurb">Laptops reacondicionadas</button>
         <button type="button" class="tab" data-cat="impresoras">Impresoras</button>
         <button type="button" class="tab" data-cat="cctv">Cámaras & CCTV</button>
         <button type="button" class="tab" data-cat="ups">UPS</button>
@@ -174,9 +178,9 @@
       <h2>Contacto</h2>
       <div class="card">
         <p class="mini">Actualiza estos datos y tu WhatsApp antes de publicar.</p>
-        <p>📞 <strong id="telMostrar">+51 999 999 999</strong> &nbsp;•&nbsp; ✉️ <strong id="mailMostrar">ventas@tudominio.com</strong> &nbsp;•&nbsp; 📍 Lima, Perú</p>
+        <p>📞 <strong id="telMostrar"></strong> &nbsp;•&nbsp; ✉️ <strong id="mailMostrar"></strong> &nbsp;•&nbsp; 📍 Lima, Perú</p>
         <div class="cta">
-          <a class="btn" id="cta-mail" href="mailto:ventas@tudominio.com">Pedir cotización</a>
+          <a class="btn" id="cta-mail" href="#">Pedir cotización</a>
           <a class="pill" id="cta-whatsapp-2" href="#">WhatsApp</a>
         </div>
       </div>
@@ -184,7 +188,7 @@
   </main>
 
   <footer>
-    © <span id="y"></span> Grupo Tecnolap EIRL · RUC 20XXXXXXXXX · Todos los derechos reservados
+    © <span id="y"></span> Grupo Tecnolap EIRL · RUC 20614167026 · Todos los derechos reservados
   </footer>
 
   <!-- MODAL PRODUCTO -->
@@ -231,44 +235,56 @@
     </div>
   </aside>
 
-    <script>
+  <script>
   // ====== CONFIGURA AQUI TU CONTACTO ======
-  const WA_PHONE = '51999999999'; // solo números, con 51
-  const TEL_SHOW = '+51 999 999 999';
-  const MAIL = 'ventas@tudominio.com';
+  const WA_PHONE = '51912811769'; // solo números, con 51
+  const TEL_SHOW = '+51 912 811 769';
+  const MAIL = 'ventas@grupotecnolap.com';
 
   document.getElementById('telMostrar').textContent = TEL_SHOW;
   document.getElementById('mailMostrar').textContent = MAIL;
-  function waLink(msg='Hola Tecnolap, quiero una cotización'){ return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(msg)}`; }
+  const waLink = (msg='Hola Tecnolap, quiero una cotización') =>
+    `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(msg)}`;
   document.getElementById('cta-whatsapp').href = waLink();
   document.getElementById('cta-whatsapp-2').href = waLink();
+  document.getElementById('cta-mail').href =
+    `mailto:${MAIL}?subject=Cotización%20Tecnolap&body=Hola,%20necesito%20cotización.`;
 
   // ====== UTIL ======
   const fmt = n => 'S/ ' + n.toLocaleString('es-PE', {maximumFractionDigits:2});
   const byId = id => document.getElementById(id);
-  document.getElementById('y').textContent=new Date().getFullYear();
+  document.getElementById('y').textContent = new Date().getFullYear();
 
   // ====== CAROUSEL HERO ======
   const slides = Array.from(document.querySelectorAll('.slide'));
   const dotsWrap = document.getElementById('dots');
   slides.forEach((_,i)=>{ const b=document.createElement('button'); b.addEventListener('click',()=>show(i,true)); dotsWrap.appendChild(b); });
-  const dots = Array.from(dotsWrap.querySelectorAll('button')); let idx = 0, timer=null;
+  const dots = Array.from(dotsWrap.querySelectorAll('button'));
+  let idx = 0, timer=null;
   function show(i,manual=false){ idx = i; slides.forEach((s,j)=>s.classList.toggle('active', j===i)); dots.forEach((d,j)=>d.classList.toggle('active', j===i)); if(manual){ resetAuto(); } }
-  function next(){ show((idx+1)%slides.length); } function resetAuto(){ clearInterval(timer); timer=setInterval(next, 4000); } show(0); resetAuto();
+  function next(){ show((idx+1)%slides.length); }
+  function resetAuto(){ clearInterval(timer); timer=setInterval(next, 4000); }
+  show(0); resetAuto();
 
-  // ====== CATALOGO (datos de ejemplo, cambia cuando quieras) ======
-  const products = [
-    {id:'lap-001', cat:'laptops', nombre:'Laptop Core i5 · 16GB · 512GB SSD', precioNum:2599, precio:'S/ 2,599', img:'img/laptops-1.jpg', imgs:['img/laptops-1.jpg','img/laptops-2.jpg','img/hero-1.jpg'], desc:'Ideal oficina/estudio. 14" FHD.', detalles:'Rendimiento sólido para ofimática, estudios y navegación.', specs:['Intel Core i5','16GB RAM','512GB SSD','Pantalla 14" FHD','Wi-Fi AC','Windows 11']},
-    {id:'lap-002', cat:'laptops', nombre:'Laptop Ryzen 5 · 16GB · 512GB', precioNum:2399, precio:'S/ 2,399', img:'img/laptops-2.jpg', imgs:['img/laptops-2.jpg','img/hero-1.jpg'], desc:'Productividad y diseño. 15.6".', detalles:'Excelente multitarea y autonomía.', specs:['Ryzen 5','16GB RAM','512GB SSD','15.6" FHD','Wi-Fi AX','Windows 11']},
-    {id:'imp-001', cat:'impresoras', nombre:'Impresora Epson L3250 (tanque)', precioNum:799, precio:'S/ 799', img:'img/imp-1.jpg', imgs:['img/imp-1.jpg','img/hero-2.jpg'], desc:'Multifunción, Wi-Fi, bajo costo por página.', detalles:'Ideal para oficinas con alto volumen.', specs:['Multifunción','Wi-Fi','Tanque de tinta']},
-    {id:'imp-002', cat:'impresoras', nombre:'HP Laser 107w', precioNum:449, precio:'S/ 449', img:'img/imp-2.jpg', imgs:['img/imp-2.jpg','img/hero-2.jpg'], desc:'Láser monocromo compacta con Wi-Fi.', detalles:'Rápida y compacta para documentos B/N.', specs:['Láser B/N','Wi-Fi','Compacta']},
-    {id:'cctv-001', cat:'cctv', nombre:'Kit Hikvision 4 cámaras 1080p', precioNum:1899, precio:'S/ 1,899', img:'img/cctv-1.jpg', imgs:['img/cctv-1.jpg','img/hero-3.jpg'], desc:'Incluye DVR y accesorios básicos.', detalles:'Solución lista para instalar y monitorear.', specs:['4 cámaras 1080p','DVR','Accesorios','App móvil']},
-    {id:'ups-001', cat:'ups', nombre:'UPS 1200VA Interactiva', precioNum:329, precio:'S/ 329', img:'img/ups-1.jpg', imgs:['img/ups-1.jpg'], desc:'Protección para PC e impresoras.', detalles:'Protege de cortes y picos.', specs:['1200VA','AVR','Varias tomas']}
-  ];
-  const P = Object.fromEntries(products.map(p=>[p.id,p]));
+  // ====== Cargar productos desde JSON ======
+  let products = [];
+  let P = {};
+  async function loadProducts(){
+    try{
+      const res = await fetch('data/products.json?v=' + Date.now()); // evita caché
+      products = await res.json();
+      P = Object.fromEntries(products.map(p => [p.id, p]));
+      render();        // pinta el catálogo
+      renderCart();    // recalcula precios del carrito
+    }catch(e){
+      console.error('No se pudieron cargar los productos:', e);
+    }
+  }
+  loadProducts();
 
   // ====== RENDER TARJETAS + TABS ======
   const grid = byId('productGrid');
+
   function card(p){
     return `<div class="card item">
       <img src="${p.img}" alt="${p.nombre}" onerror="this.src='https://picsum.photos/seed/${p.id}/800/500'"/>
@@ -283,8 +299,14 @@
       </div>
     </div>`;
   }
-  function render(cat='todo'){ const list = (cat==='todo')? products : products.filter(p=>p.cat===cat); grid.innerHTML = list.map(card).join(''); }
-  render();
+
+  function render(cat='todo'){
+    const list = (cat==='todo') ? products : products.filter(p => p.cat === cat);
+    grid.innerHTML = list.length
+      ? list.map(card).join('')
+      : '<div class="mini" style="opacity:.8;padding:18px">No hay productos en esta categoría.</div>';
+  }
+
   const tabsEl = document.getElementById('tabs');
   tabsEl.querySelectorAll('.tab').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -299,10 +321,16 @@
   function openProduct(id){
     const p = P[id]; if(!p) return; CURRENT=p;
     byId('pdName').textContent = p.nombre;
-    byId('pdCat').textContent = ({laptops:'Laptops',impresoras:'Impresoras',cctv:'Cámaras & CCTV',ups:'UPS'})[p.cat]||'';
+    byId('pdCat').textContent = ({
+      laptops:'Laptops',
+      refurb:'Laptops reacondicionadas',
+      impresoras:'Impresoras',
+      cctv:'Cámaras & CCTV',
+      ups:'UPS'
+    })[p.cat] || '';
     byId('pdPrice').textContent = p.precio;
-    byId('pdDetalles').textContent = p.detalles||'';
-    byId('pdSpecs').innerHTML = (p.specs||[]).map(s=>`<li>• ${s}</li>`).join('');
+    byId('pdDetalles').textContent = p.detalles || '';
+    byId('pdSpecs').innerHTML = (p.specs || []).map(s=>`<li>• ${s}</li>`).join('');
     byId('pdWA').href = waLink(`Hola, me interesa ${p.nombre} (${p.precio}). ¿Disponibilidad y entrega?`);
     byId('pdAdd').onclick = ()=>addToCart(p.id, 1, true);
 
@@ -343,7 +371,13 @@
   function renderCart(){
     byId('cartCount').textContent = countCart();
     const wrap = byId('cartList');
-    if(cart.length===0){ wrap.innerHTML = `<div class="empty">Tu carrito está vacío.</div>`; byId('cartSubtotal').textContent=fmt(0); byId('cartIGV').textContent=fmt(0); byId('cartTotal').textContent=fmt(0); return; }
+    if(cart.length===0){
+      wrap.innerHTML = `<div class="empty">Tu carrito está vacío.</div>`;
+      byId('cartSubtotal').textContent=fmt(0);
+      byId('cartIGV').textContent=fmt(0);
+      byId('cartTotal').textContent=fmt(0);
+      return;
+    }
     wrap.innerHTML = cart.map(c=>{
       const p=P[c.id]; if(!p) return '';
       return `<div class="cartItem">
@@ -381,9 +415,6 @@
     const msg = `Hola, quiero comprar:%0A${lines}%0A%0ATotal carrito: ${byId('cartTotal').textContent}%0A¿Opciones de pago y entrega (Lima/Provincias)?`;
     window.open(waLink(msg), '_blank');
   };
-
-  // Enviar email CTA
-  document.getElementById('cta-mail').href = `mailto:${MAIL}?subject=Cotización%20Tecnolap&body=Hola,%20necesito%20cotización.`;
 
   // Abrir producto por hash #p=lap-001
   function checkHash(){ const m=location.hash.match(/#p=([a-z0-9-]+)/i); if(m) openProduct(m[1]); }
