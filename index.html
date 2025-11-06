@@ -9,6 +9,28 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- SEO / Social -->
+  <link rel="canonical" href="https://grupotecnolap.com/" />
+  <meta property="og:title" content="Grupo Tecnolap EIRL — Equipos de Cómputo, Impresoras y CCTV">
+  <meta property="og:description" content="Laptops, impresoras, CCTV, UPS y soporte técnico. Cotiza por WhatsApp.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://grupotecnolap.com/">
+  <meta property="og:image" content="https://grupotecnolap.com/img/hero-1.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Grupo Tecnolap EIRL",
+    "url": "https://grupotecnolap.com/",
+    "logo": "https://grupotecnolap.com/favicon.ico",
+    "telephone": "+51 912 811 769",
+    "email": "ventas@grupotecnolap.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Lima", "addressCountry": "PE" }
+  }
+  </script>
+
   <style>
     :root{
       --bg:#0b1020; --card:#0f1530; --muted:#8ea0bf; --text:#eaf1ff;
@@ -57,12 +79,27 @@
     .dots button{width:9px;height:9px;border-radius:50%;border:0;background:rgba(255,255,255,.45);cursor:pointer}
     .dots button.active{background:#fff}
 
+    /* Toolbar (buscar / orden / stock) */
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 12px}
+    .toolbar input,.toolbar select,.toolbar label{
+      background:#0f1530;border:1px solid rgba(255,255,255,.12);
+      color:var(--text);border-radius:12px;padding:10px 12px;outline:none
+    }
+    .toolbar label{display:inline-flex;gap:8px;align-items:center;cursor:pointer}
+    .toolbar input[type="checkbox"]{accent-color:#7c4dff;border:none}
+
     /* Tabs + productos */
     .tabs{display:flex;gap:10px;flex-wrap:wrap}
     .tab{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.15);cursor:pointer;color:var(--muted);background:transparent}
     .tab.active{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#061019;border-color:transparent;font-weight:700}
     .products .item img{width:100%;height:160px;object-fit:cover;border-radius:14px}
     .products .item h3{margin:10px 0 4px;font-size:18px}
+    .item.disabled{opacity:.75}
+    .soldout{
+      position:absolute; top:10px; left:10px;
+      background:#f33; color:#fff; font-weight:700;
+      padding:4px 8px; border-radius:8px; font-size:12px;
+    }
 
     /* Modal producto */
     .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:200}
@@ -150,6 +187,19 @@
     <!-- CATALOGO -->
     <section id="catalogo" style="margin-top:26px">
       <h2>Catálogo</h2>
+
+      <div class="toolbar">
+        <input id="q" type="search" placeholder="Buscar (marca, modelo, categoría)..." />
+        <select id="sort">
+          <option value="recientes">Ordenar: Recientes</option>
+          <option value="precio-asc">Precio: menor a mayor</option>
+          <option value="precio-desc">Precio: mayor a menor</option>
+          <option value="nombre-asc">Nombre A–Z</option>
+          <option value="nombre-desc">Nombre Z–A</option>
+        </select>
+        <label><input type="checkbox" id="onlyStock"> Solo con stock en Lima</label>
+      </div>
+
       <div class="tabs" id="tabs">
         <button type="button" class="tab active" data-cat="todo">Todo</button>
         <button type="button" class="tab" data-cat="laptops">Laptops</button>
@@ -250,6 +300,17 @@
   document.getElementById('cta-mail').href =
     `mailto:${MAIL}?subject=Cotización%20Tecnolap&body=Hola,%20necesito%20cotización.`;
 
+  // ====== (Opcional) Reglas de precio si luego las usas en tu pipeline ======
+  const TC = 3.80;            // tipo de cambio USD->PEN
+  const RECARGO_PCT = 0.03;   // +3%
+  const RECARGO_FIJO = 120;   // +S/120
+  function calcFinal({usd=null, pen=null, igvIncluido=false}){
+    let base = usd!=null ? usd*TC : (pen??0);
+    if(!igvIncluido) base *= 1.18;
+    const total = base*(1+RECARGO_PCT) + RECARGO_FIJO;
+    return Math.round(total);
+  }
+
   // ====== UTIL ======
   const fmt = n => 'S/ ' + n.toLocaleString('es-PE', {maximumFractionDigits:2});
   const byId = id => document.getElementById(id);
@@ -282,29 +343,73 @@
   }
   loadProducts();
 
+  // ====== Buscador + Orden + Filtro stock ======
+  let searchTerm = '';
+  let orderBy = 'recientes';
+  const q = document.getElementById('q');
+  const sortSel = document.getElementById('sort');
+  const onlyStock = document.getElementById('onlyStock');
+
+  q?.addEventListener('input', () => {
+    searchTerm = q.value.trim().toLowerCase();
+    render(document.querySelector('.tab.active')?.dataset.cat || 'todo');
+  });
+  sortSel?.addEventListener('change', () => {
+    orderBy = sortSel.value;
+    render(document.querySelector('.tab.active')?.dataset.cat || 'todo');
+  });
+  onlyStock?.addEventListener('change', () => {
+    render(document.querySelector('.tab.active')?.dataset.cat || 'todo');
+  });
+
   // ====== RENDER TARJETAS + TABS ======
   const grid = byId('productGrid');
 
   function card(p){
-    return `<div class="card item">
-      <img src="${p.img}" alt="${p.nombre}" onerror="this.src='https://picsum.photos/seed/${p.id}/800/500'"/>
+    const inStock = Number(p.stockLima ?? 1) > 0; // si no viene stockLima, asumimos disponible
+    return `<div class="card item ${inStock ? '' : 'disabled'}">
+      <div style="position:relative">
+        <img loading="lazy" decoding="async" src="${p.img}" alt="${p.nombre}"
+             onerror="this.src='https://picsum.photos/seed/${p.id}/800/500'"/>
+        ${inStock ? '' : '<span class="soldout">Agotado</span>'}
+      </div>
       <h3>${p.nombre}</h3>
       <div class="mini">${p.desc || ''}</div>
       <div class="cta" style="justify-content:space-between;align-items:center">
         <span style="opacity:.9;font-weight:700">${p.precio}</span>
         <div style="display:flex;gap:8px">
           <button type="button" class="pill" onclick="openProduct('${p.id}')">Ver detalles</button>
-          <button type="button" class="pill" onclick="addToCart('${p.id}')">Agregar</button>
+          <button type="button" class="pill" ${inStock ? '' : 'disabled'} onclick="addToCart('${p.id}')">Agregar</button>
         </div>
       </div>
     </div>`;
   }
 
   function render(cat='todo'){
-    const list = (cat==='todo') ? products : products.filter(p => p.cat === cat);
+    let list = (cat==='todo') ? products.slice() : products.filter(p => p.cat === cat);
+
+    if (searchTerm) {
+      list = list.filter(p => {
+        const hay = `${p.nombre} ${p.desc||''} ${(p.specs||[]).join(' ')}`.toLowerCase();
+        return hay.includes(searchTerm);
+      });
+    }
+
+    if (onlyStock?.checked) {
+      list = list.filter(p => Number(p.stockLima ?? 0) > 0);
+    }
+
+    switch (orderBy) {
+      case 'precio-asc':  list.sort((a,b) => (a.precioNum||0) - (b.precioNum||0)); break;
+      case 'precio-desc': list.sort((a,b) => (b.precioNum||0) - (a.precioNum||0)); break;
+      case 'nombre-asc':  list.sort((a,b) => a.nombre.localeCompare(b.nombre, 'es')); break;
+      case 'nombre-desc': list.sort((a,b) => b.nombre.localeCompare(a.nombre, 'es')); break;
+      default: /* recientes: mantener orden del JSON */ break;
+    }
+
     grid.innerHTML = list.length
       ? list.map(card).join('')
-      : '<div class="mini" style="opacity:.8;padding:18px">No hay productos en esta categoría.</div>';
+      : '<div class="mini" style="opacity:.8;padding:18px">No hay productos que coincidan.</div>';
   }
 
   const tabsEl = document.getElementById('tabs');
