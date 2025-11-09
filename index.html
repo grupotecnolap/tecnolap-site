@@ -36,6 +36,7 @@
       --bg:#0b1020; --card:#0f1530; --muted:#8ea0bf; --text:#eaf1ff;
       --brand:#4fc3f7; --brand-2:#7c4dff; --ok:#18d47b;
       --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35);
+      --accent:#7c4dff;
     }
     *{box-sizing:border-box}
     html,body{
@@ -49,11 +50,16 @@
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:24px}
 
+    /* Announcement bar */
+    .announce{background:linear-gradient(90deg,rgba(124,77,255,.25),rgba(79,195,247,.25)); border-bottom:1px solid rgba(255,255,255,.08); font-size:13px}
+    .announce .wrap{max-width:1100px;margin:0 auto;padding:8px 24px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;color:#d9e4ff}
+
     /* Nav */
     header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(11,16,32,.9),rgba(11,16,32,.6));backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
     .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
     .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:var(--shadow);font-weight:800}
+    .logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:var(--shadow);font-weight:800;overflow:hidden}
+    .logo img{width:42px;height:42px;object-fit:cover;display:block}
     nav a{opacity:.9;margin-left:18px}
     .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#061019;font-weight:700;box-shadow:var(--shadow);border:0;cursor:pointer}
     .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.15);background:transparent;color:var(--text);cursor:pointer}
@@ -79,14 +85,15 @@
     .dots button{width:9px;height:9px;border-radius:50%;border:0;background:rgba(255,255,255,.45);cursor:pointer}
     .dots button.active{background:#fff}
 
-    /* Toolbar (buscar / orden / stock) */
-    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 12px}
+    /* Toolbar */
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 12px;align-items:center}
     .toolbar input,.toolbar select,.toolbar label{
       background:#0f1530;border:1px solid rgba(255,255,255,.12);
       color:var(--text);border-radius:12px;padding:10px 12px;outline:none
     }
     .toolbar label{display:inline-flex;gap:8px;align-items:center;cursor:pointer}
     .toolbar input[type="checkbox"]{accent-color:#7c4dff;border:none}
+    .tcBadge{font-size:12px;color:#bcd0ff;cursor:pointer}
 
     /* Tabs + productos */
     .tabs{display:flex;gap:10px;flex-wrap:wrap}
@@ -99,6 +106,10 @@
       position:absolute; top:10px; left:10px;
       background:#f33; color:#fff; font-weight:700;
       padding:4px 8px; border-radius:8px; font-size:12px;
+    }
+    .codBadge{
+      position:absolute; top:10px; right:10px;
+      background:rgba(0,0,0,.55); color:#fff; font-weight:700; font-size:11px; padding:4px 8px; border-radius:8px;
     }
 
     /* Modal producto */
@@ -140,10 +151,18 @@
   </style>
 </head>
 <body>
+  <!-- Announcement bar -->
+  <div class="announce"><div class="wrap">
+    🚚 Envíos diarios a todo el Perú · 🧾 Facturación electrónica · 🛡️ Garantía oficial · 🕒 Soporte rápido
+  </div></div>
+
   <header>
     <div class="container nav">
       <div class="brand">
-        <div class="logo">TL</div>
+        <div class="logo">
+          <!-- Reemplaza por tu archivo -->
+          <img src="img/logo-tecnolap.png" alt="Grupo Tecnolap" onerror="this.remove();this.parentElement.textContent='TL'">
+        </div>
         <div>
           <strong>Grupo Tecnolap EIRL</strong>
           <div class="mini">Hardware • Software • Soporte</div>
@@ -153,6 +172,7 @@
         <a href="#catalogo">Catálogo</a>
         <a href="#servicios">Servicios</a>
         <a href="#contacto" class="pill">Contacto</a>
+        <a id="btnLeads" class="pill" href="javascript:void(0)">📣 Ofertas</a>
         <button id="btnCart" class="pill">🛒 Carrito <span id="cartCount" class="badge">0</span></button>
       </nav>
     </div>
@@ -198,6 +218,7 @@
           <option value="nombre-desc">Nombre Z–A</option>
         </select>
         <label><input type="checkbox" id="onlyStock"> Solo con stock en Lima</label>
+        <span class="tcBadge" id="tcBadge" title="Click para editar (Shift+T)">TC: <strong id="tcVal">—</strong></span>
       </div>
 
       <div class="tabs" id="tabs">
@@ -257,6 +278,7 @@
       <div class="modal__right">
         <h3 id="pdName"></h3>
         <div class="mini" id="pdCat"></div>
+        <div class="mini" id="pdCode" style="margin:2px 0 8px"></div>
         <div style="font-weight:800;margin:6px 0 10px" id="pdPrice"></div>
         <p id="pdDetalles"></p>
         <ul id="pdSpecs" class="mini" style="margin:10px 0 16px;line-height:1.5"></ul>
@@ -264,6 +286,24 @@
           <button class="btn" id="pdAdd">Agregar al carrito</button>
           <a class="pill" id="pdWA" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL LEADS -->
+  <div id="leadModal" class="modal">
+    <div class="modal__overlay" onclick="closeLead()"></div>
+    <div class="modal__box" style="max-width:560px;grid-template-columns:1fr">
+      <button class="modal__close" aria-label="Cerrar" onclick="closeLead()">✕</button>
+      <div>
+        <h3>📣 Recibe ofertas y novedades</h3>
+        <p class="mini">Déjanos tu correo o celular y te avisamos de promos y reposiciones.</p>
+        <form id="leadForm" class="cta" style="gap:10px;flex-wrap:wrap">
+          <input type="email" id="leadEmail" placeholder="tu@correo.com" style="flex:1 1 240px;background:#0f1530;border:1px solid rgba(255,255,255,.12);color:var(--text);border-radius:12px;padding:10px 12px;outline:none">
+          <input type="tel" id="leadPhone" placeholder="+51 9xx xxx xxx" style="flex:1 1 180px;background:#0f1530;border:1px solid rgba(255,255,255,.12);color:var(--text);border-radius:12px;padding:10px 12px;outline:none">
+          <button class="btn" type="submit">Registrarme</button>
+        </form>
+        <div class="mini" style="margin-top:8px">*Puedes darte de baja cuando quieras.</div>
       </div>
     </div>
   </div>
@@ -300,33 +340,46 @@
   document.getElementById('cta-mail').href =
     `mailto:${MAIL}?subject=Cotización%20Tecnolap&body=Hola,%20necesito%20cotización.`;
 
-  // ====== PRECIOS: TC + recargos + redondeo ======
-  // TC: guarda el último valor en localStorage; fallback 3.80
-  let TC = parseFloat(localStorage.getItem('TC_val') || '3.39');
-  const RECARGO_PCT = 0.03;   // +3% final
-  const RECARGO_FIJO = 110;   // +S/110 final
+  // ====== PRECIOS: TC + márgenes por sector + redondeo ======
+  // TC: guarda último valor; auto update diario
+  let TC = parseFloat(localStorage.getItem('TC_val') || '3.80');
+  const tcValEl = document.getElementById('tcVal'); const tcBadge = document.getElementById('tcBadge');
 
-  // Redondeo "bonito": .00 o .50, con salto a .00 desde .60 en adelante
+  // Márgenes por categoría (edítalos a gusto)
+  const MARKUP = {
+    default:{ pct:0.03, fijo:110 },
+    laptops:{ pct:0.03, fijo:110 },
+    impresoras:{ pct:0.06, fijo:80 },
+    cctv:{ pct:0.08, fijo:100 },
+    ups:{ pct:0.04, fijo:60 },
+    refurb:{ pct:0.03, fijo:110 }
+  };
+
+  // Redondeo a .00 / .50
   function round50(n){
     const soles = Math.floor(n);
     const cents = Math.round((n - soles) * 100);
-    if (cents <= 9) return soles;            // .00–.09 → .00
-    if (cents <= 59) return soles + 0.50;    // .10–.59 → .50
-    return soles + 1.00;                     // .60–.99 → siguiente sol
+    if (cents <= 9) return soles;
+    if (cents <= 59) return soles + 0.50;
+    return soles + 1.00;
   }
 
-  // Calcula precio final en S/ a partir de USD o PEN
-  function calcFinal({usd=null, pen=null, igvIncluido=false}){
+  function calcFinal({usd=null, pen=null, igvIncluido=false, cat='default', markupPct=null, markupFijo=null}){
     let base = usd!=null ? usd*TC : (pen ?? 0);
-    if(!igvIncluido) base *= 1.18;                  // agrega IGV si falta
-    const total = base*(1+RECARGO_PCT) + RECARGO_FIJO;  // +3% y +S/110
-    return round50(total);                           // redondeo .00/.50
+    if(!igvIncluido) base *= 1.18; // agrega IGV si el costo venía sin IGV
+    const mk = MARKUP[cat] || MARKUP.default;
+    const pct = markupPct!=null ? markupPct : mk.pct;
+    const fijo = markupFijo!=null ? markupFijo : mk.fijo;
+    const total = base*(1+pct) + fijo;
+    return round50(total);
   }
 
   // ====== UTIL ======
   const fmt = n => 'S/ ' + Number(n||0).toLocaleString('es-PE', {minimumFractionDigits:2, maximumFractionDigits:2});
   const byId = id => document.getElementById(id);
   document.getElementById('y').textContent = new Date().getFullYear();
+  const setTCText = () => tcValEl.textContent = TC.toFixed(3);
+  setTCText();
 
   // ====== CAROUSEL HERO ======
   const slides = Array.from(document.querySelectorAll('.slide'));
@@ -348,8 +401,9 @@
       TC = parseFloat(j.rates.PEN);
       localStorage.setItem('TC_val', String(TC));
       localStorage.setItem('TC_date', new Date().toISOString().slice(0,10));
+      setTCText();
+      await loadProducts(); // recalc
       if(!auto) alert('TC actualizado: ' + TC.toFixed(3));
-      await loadProducts(); // recalc precios calculados
     }catch(e){
       if(!auto) alert('No se pudo actualizar TC. Se mantiene: ' + TC.toFixed(3));
       console.warn('TC auto error:', e);
@@ -369,6 +423,7 @@
       TC = nv;
       localStorage.setItem('TC_val', String(TC));
       localStorage.setItem('TC_date', new Date().toISOString().slice(0,10));
+      setTCText();
       loadProducts();
       alert('TC guardado: ' + TC.toFixed(3));
     }else{
@@ -376,6 +431,31 @@
     }
   }
   document.addEventListener('keydown', (e)=>{ if(e.shiftKey && (e.key==='T' || e.key==='t')) setManualTC(); });
+  tcBadge.addEventListener('click', setManualTC);
+
+  // ====== LEADS (correo / celular) ======
+  const LEADS_ENDPOINT = ''; // si tienes Web3Forms, Formspree o Apps Script, pega aquí la URL
+  const leadModal = byId('leadModal'); const btnLeads = byId('btnLeads');
+  btnLeads.onclick = ()=>leadModal.classList.add('open');
+  function closeLead(){ leadModal.classList.remove('open'); }
+  window.closeLead = closeLead;
+  byId('leadForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const email = byId('leadEmail').value.trim();
+    const phone = byId('leadPhone').value.trim();
+    if(!email && !phone){ alert('Ingresa al menos correo o celular.'); return; }
+    if(LEADS_ENDPOINT){
+      try{
+        const res = await fetch(LEADS_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,phone,source:'web_tecnolap'})});
+        if(!res.ok) throw new Error('Error de envío');
+        alert('¡Registro enviado!'); closeLead();
+      }catch(_){ alert('No se pudo enviar. Escríbenos por WhatsApp.'); window.open(waLink('Hola, quiero registrarme a ofertas.'), '_blank'); }
+    }else{
+      // Fallback: WhatsApp
+      window.open(waLink(`Hola, quiero registrarme a ofertas. Email: ${email||'-'} Tel: ${phone||'-'}`),'_blank');
+      closeLead();
+    }
+  });
 
   // ====== Cargar productos desde JSON ======
   let products = [];
@@ -388,11 +468,17 @@
       // Calcula precio si viene "precioCalc"
       arr = arr.map(p=>{
         if(!p.precioNum && p.precioCalc){
-          const monto = calcFinal(p.precioCalc);
+          const monto = calcFinal({
+            usd:p.precioCalc.usd ?? null,
+            pen:p.precioCalc.pen ?? null,
+            igvIncluido: !!p.precioCalc.igvIncluido,
+            cat: p.cat || 'default',
+            markupPct: p.precioCalc.markupPct ?? null,
+            markupFijo: p.precioCalc.markupFijo ?? null
+          });
           p.precioNum = monto;
           p.precio = fmt(monto);
         }else{
-          // asegura string formateado si solo vino precioNum
           if(p.precioNum && !p.precio) p.precio = fmt(p.precioNum);
         }
         return p;
@@ -400,8 +486,8 @@
 
       products = arr;
       P = Object.fromEntries(products.map(p => [p.id, p]));
-      render();        // pinta el catálogo
-      renderCart();    // recalcula precios del carrito
+      render();        // catálogo
+      renderCart();    // carrito
     }catch(e){
       console.error('No se pudieron cargar los productos:', e);
     }
@@ -431,11 +517,12 @@
   const grid = byId('productGrid');
 
   function card(p){
-    const inStock = Number(p.stockLima ?? 1) > 0; // si no viene stockLima, asumimos disponible
+    const inStock = Number(p.stockLima ?? 1) > 0;
     return `<div class="card item ${inStock ? '' : 'disabled'}">
       <div style="position:relative">
         <img loading="lazy" decoding="async" src="${p.img}" alt="${p.nombre}"
              onerror="this.src='https://picsum.photos/seed/${p.id}/800/500'"/>
+        ${p.codigo ? `<span class="codBadge">${p.codigo}</span>` : ''}
         ${inStock ? '' : '<span class="soldout">Agotado</span>'}
       </div>
       <h3>${p.nombre}</h3>
@@ -455,7 +542,7 @@
 
     if (searchTerm) {
       list = list.filter(p => {
-        const hay = `${p.nombre} ${p.desc||''} ${(p.specs||[]).join(' ')}`.toLowerCase();
+        const hay = `${p.nombre} ${p.codigo||''} ${p.desc||''} ${(p.specs||[]).join(' ')}`.toLowerCase();
         return hay.includes(searchTerm);
       });
     }
@@ -469,7 +556,7 @@
       case 'precio-desc': list.sort((a,b) => (b.precioNum||0) - (a.precioNum||0)); break;
       case 'nombre-asc':  list.sort((a,b) => a.nombre.localeCompare(b.nombre, 'es')); break;
       case 'nombre-desc': list.sort((a,b) => b.nombre.localeCompare(a.nombre, 'es')); break;
-      default: /* recientes */ break;
+      default: break;
     }
 
     grid.innerHTML = list.length
@@ -498,10 +585,11 @@
       cctv:'Cámaras & CCTV',
       ups:'UPS'
     })[p.cat] || '';
+    byId('pdCode').textContent = p.codigo ? `Código: ${p.codigo}` : '';
     byId('pdPrice').textContent = p.precio;
     byId('pdDetalles').textContent = p.detalles || '';
     byId('pdSpecs').innerHTML = (p.specs || []).map(s=>`<li>• ${s}</li>`).join('');
-    byId('pdWA').href = waLink(`Hola, me interesa ${p.nombre} (${p.precio}). ¿Disponibilidad y entrega?`);
+    byId('pdWA').href = waLink(`Hola, me interesa ${p.nombre} (${p.precio})${p.codigo?` [${p.codigo}]`:''}. ¿Disponibilidad y entrega?`);
     byId('pdAdd').onclick = ()=>addToCart(p.id, 1, true);
 
     const imgs = (p.imgs && p.imgs.length) ? p.imgs : [p.img];
@@ -514,8 +602,10 @@
     byId('productModal').classList.add('open'); document.body.style.overflow='hidden';
   }
   function closeProduct(){ byId('productModal').classList.remove('open'); document.body.style.overflow=''; CURRENT=null; }
+  window.closeProduct = closeProduct;
   function galPrev(){ if(!CURRENT) return; const imgs=(CURRENT.imgs&&CURRENT.imgs.length)?CURRENT.imgs:[CURRENT.img]; GALIDX=(GALIDX-1+imgs.length)%imgs.length; byId('galMain').src=imgs[GALIDX]; document.querySelectorAll('#galThumbs img').forEach((t,idx)=>t.classList.toggle('active', idx===GALIDX)); }
   function galNext(){ if(!CURRENT) return; const imgs=(CURRENT.imgs&&CURRENT.imgs.length)?CURRENT.imgs:[CURRENT.img]; GALIDX=(GALIDX+1)%imgs.length; byId('galMain').src=imgs[GALIDX]; document.querySelectorAll('#galThumbs img').forEach((t,idx)=>t.classList.toggle('active', idx===GALIDX)); }
+  window.galPrev = galPrev; window.galNext = galNext;
   window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeProduct(); });
 
   // ====== CARRITO ======
@@ -554,7 +644,7 @@
         <img src="${p.img}" alt="${p.nombre}" onerror="this.src='https://picsum.photos/seed/${p.id}/160/100'"/>
         <div>
           <div style="font-weight:700">${p.nombre}</div>
-          <div class="mini">${p.precio}</div>
+          <div class="mini">${p.precio}${p.codigo?` · ${p.codigo}`:''}</div>
           <div class="qty" style="margin-top:6px">
             <button onclick="setQty('${c.id}', ${c.qty-1})">−</button>
             <span>${c.qty}</span>
@@ -568,7 +658,7 @@
       </div>`;
     }).join('');
 
-    // Asumimos precios con IGV incluido: IGV = sub - (sub/1.18); Total = Subtotal
+    // Precios ya incluyen IGV => IGV = sub - (sub/1.18)
     const sub = subtotal();
     const igv = sub - (sub/1.18);
     const tot = sub;
@@ -584,7 +674,7 @@
     if(cart.length===0) return;
     const lines = cart.map(c=>{
       const p=P[c.id]; const s=fmt((p.precioNum||0)*c.qty);
-      return `• ${p?.nombre} x${c.qty} — ${s}`;
+      return `• ${p?.nombre}${p?.codigo?` [${p.codigo}]`:''} x${c.qty} — ${s}`;
     }).join('%0A');
     const msg = `Hola, quiero comprar:%0A${lines}%0A%0ATotal carrito: ${byId('cartTotal').textContent}%0A¿Opciones de pago y entrega (Lima/Provincias)?`;
     window.open(waLink(msg), '_blank');
