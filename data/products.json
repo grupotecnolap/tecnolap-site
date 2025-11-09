@@ -1,39 +1,38 @@
 [
   {
-    "id": "lap-001",
+    "id": "lap-adv-cn4058",
     "cat": "laptops",
-    "nombre": "Laptop Core i5 · 16GB · 512GB SSD",
-    "precioNum": 2599,
-    "precio": "S/ 2,599",
-    "img": "img/laptops-1.jpg",
-    "imgs": ["img/laptops-1.jpg", "img/hero-1.jpg"],
-    "desc": "Ideal oficina/estudio. 14\" FHD.",
-    "detalles": "Rendimiento sólido para ofimática y estudio.",
-    "specs": ["Intel Core i5","16GB RAM","512GB SSD","14\" FHD","Wi-Fi AC","Windows 11"]
-  },
-  {
-    "id": "lap-002",
-    "cat": "laptops",
-    "nombre": "Laptop Ryzen 5 · 16GB · 512GB",
-    "precioNum": 2399,
-    "precio": "S/ 2,399",
-    "img": "img/laptops-2.jpg",
-    "imgs": ["img/laptops-2.jpg","img/hero-1.jpg"],
-    "desc": "Productividad y diseño. 15.6\".",
-    "detalles": "Excelente multitarea y autonomía.",
-    "specs": ["Ryzen 5","16GB RAM","512GB SSD","15.6\" FHD","Wi-Fi 6","Windows 11"]
-  },
-  {
-    "id": "ref-001",
-    "cat": "refurb",
-    "nombre": "Laptop Refurb Dell i5 · 8GB · 256GB",
-    "precioNum": 1299,
-    "precio": "S/ 1,299",
-    "img": "img/ref-dell-1.jpg",
-    "imgs": ["img/ref-dell-1.jpg","img/ref-dell-2.jpg"],
-    "desc": "Equipo reacondicionado grado A.",
-    "detalles": "Incluye cargador. Garantía 3 meses.",
-    "specs": ["Intel Core i5 8va gen","8GB RAM","256GB SSD","14\" FHD","Windows 11 Pro"]
+    "nombre": "Advance CN4058 2 en 1 · N4020 · 8GB · 128GB · 10.1\" táctil",
+    "precioCalc": { "usd": 158, "igvIncluido": false },
+    "img": "img/laptops/adv-cn4058-1.jpg",
+    "imgs": [
+      "img/laptops/adv-cn4058-1.jpg",
+      "img/laptops/adv-cn4058-2.jpg",
+      "img/laptops/adv-cn4058-3.jpg"
+    ],
+    "desc": "Notebook 2 en 1 con teclado desmontable, ideal para estudio y movilidad.",
+    "detalles": "Garantía 12 meses. Incluye teclado desmontable.",
+    "specs": [
+      "Intel Celeron N4020",
+      "8GB LPDDR4",
+      "128GB eMMC",
+      "10.1\" 800×1280 táctil",
+      "Intel UHD Graphics 600",
+      "Wi-Fi 802.11ac · BT 5.0",
+      "Webcam frontal/trasera 2.0MP",
+      "Micro HDMI",
+      "USB 3.0 x1, USB 2.0 x1",
+      "Lector MicroSD",
+      "Batería 3000 mAh",
+      "Windows 11 Home",
+      "1.11 kg"
+    ],
+    "codigo": "NBADVCN4058BK-S",
+    "minicodigo": "452336",
+    "fabricanteCod": "ADV-CN4058",
+    "marca": "Advance",
+    "modelo": "CN4058",
+    "stockLima": 1
   },
   {
     "id": "imp-001",
