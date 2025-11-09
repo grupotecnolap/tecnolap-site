@@ -277,16 +277,16 @@
     </div>
     <div id="cartList" class="cartList"></div>
     <div class="cartFoot">
-      <div class="row"><span>Subtotal</span><strong id="cartSubtotal">S/ 0</strong></div>
-      <div class="row"><span>IGV (18%)</span><strong id="cartIGV">S/ 0</strong></div>
-      <div class="row"><span>Total</span><strong id="cartTotal">S/ 0</strong></div>
+      <div class="row"><span>Subtotal</span><strong id="cartSubtotal">S/ 0.00</strong></div>
+      <div class="row"><span>IGV (18%)</span><strong id="cartIGV">S/ 0.00</strong></div>
+      <div class="row"><span>Total</span><strong id="cartTotal">S/ 0.00</strong></div>
       <button id="btnCheckout" class="btn">Finalizar por WhatsApp</button>
       <button id="btnClear" class="pill">Vaciar carrito</button>
     </div>
   </aside>
 
   <script>
-  // ====== CONFIGURA AQUI TU CONTACTO ======
+  // ====== CONTACTO ======
   const WA_PHONE = '51912811769'; // solo números, con 51
   const TEL_SHOW = '+51 912 811 769';
   const MAIL = 'ventas@grupotecnolap.com';
@@ -300,19 +300,31 @@
   document.getElementById('cta-mail').href =
     `mailto:${MAIL}?subject=Cotización%20Tecnolap&body=Hola,%20necesito%20cotización.`;
 
-  // ====== (Opcional) Reglas de precio si luego las usas en tu pipeline ======
-  const TC = 3.80;            // tipo de cambio USD->PEN
-  const RECARGO_PCT = 0.03;   // +3%
-  const RECARGO_FIJO = 120;   // +S/120
+  // ====== PRECIOS: TC + recargos + redondeo ======
+  // TC: guarda el último valor en localStorage; fallback 3.80
+  let TC = parseFloat(localStorage.getItem('TC_val') || '3.39');
+  const RECARGO_PCT = 0.03;   // +3% final
+  const RECARGO_FIJO = 110;   // +S/110 final
+
+  // Redondeo "bonito": .00 o .50, con salto a .00 desde .60 en adelante
+  function round50(n){
+    const soles = Math.floor(n);
+    const cents = Math.round((n - soles) * 100);
+    if (cents <= 9) return soles;            // .00–.09 → .00
+    if (cents <= 59) return soles + 0.50;    // .10–.59 → .50
+    return soles + 1.00;                     // .60–.99 → siguiente sol
+  }
+
+  // Calcula precio final en S/ a partir de USD o PEN
   function calcFinal({usd=null, pen=null, igvIncluido=false}){
-    let base = usd!=null ? usd*TC : (pen??0);
-    if(!igvIncluido) base *= 1.18;
-    const total = base*(1+RECARGO_PCT) + RECARGO_FIJO;
-    return Math.round(total);
+    let base = usd!=null ? usd*TC : (pen ?? 0);
+    if(!igvIncluido) base *= 1.18;                  // agrega IGV si falta
+    const total = base*(1+RECARGO_PCT) + RECARGO_FIJO;  // +3% y +S/110
+    return round50(total);                           // redondeo .00/.50
   }
 
   // ====== UTIL ======
-  const fmt = n => 'S/ ' + n.toLocaleString('es-PE', {maximumFractionDigits:2});
+  const fmt = n => 'S/ ' + Number(n||0).toLocaleString('es-PE', {minimumFractionDigits:2, maximumFractionDigits:2});
   const byId = id => document.getElementById(id);
   document.getElementById('y').textContent = new Date().getFullYear();
 
@@ -327,13 +339,66 @@
   function resetAuto(){ clearInterval(timer); timer=setInterval(next, 4000); }
   show(0); resetAuto();
 
+  // ====== TC automático diario + atajo manual ======
+  async function refreshTC(auto=true){
+    try{
+      const r = await fetch('https://api.exchangerate.host/latest?base=USD&symbols=PEN', {cache:'no-store'});
+      const j = await r.json();
+      if(!j?.rates?.PEN) throw new Error('Respuesta inválida');
+      TC = parseFloat(j.rates.PEN);
+      localStorage.setItem('TC_val', String(TC));
+      localStorage.setItem('TC_date', new Date().toISOString().slice(0,10));
+      if(!auto) alert('TC actualizado: ' + TC.toFixed(3));
+      await loadProducts(); // recalc precios calculados
+    }catch(e){
+      if(!auto) alert('No se pudo actualizar TC. Se mantiene: ' + TC.toFixed(3));
+      console.warn('TC auto error:', e);
+    }
+  }
+  (async ()=>{
+    const today = new Date().toISOString().slice(0,10);
+    if(localStorage.getItem('TC_date') !== today){
+      await refreshTC(true);
+    }
+  })();
+  function setManualTC(){
+    const v = prompt('Nuevo tipo de cambio (USD→PEN):', TC.toFixed(3));
+    if(!v) return;
+    const nv = parseFloat(v.replace(',','.'));
+    if(!isNaN(nv) && nv>0){
+      TC = nv;
+      localStorage.setItem('TC_val', String(TC));
+      localStorage.setItem('TC_date', new Date().toISOString().slice(0,10));
+      loadProducts();
+      alert('TC guardado: ' + TC.toFixed(3));
+    }else{
+      alert('Valor inválido.');
+    }
+  }
+  document.addEventListener('keydown', (e)=>{ if(e.shiftKey && (e.key==='T' || e.key==='t')) setManualTC(); });
+
   // ====== Cargar productos desde JSON ======
   let products = [];
   let P = {};
   async function loadProducts(){
     try{
       const res = await fetch('data/products.json?v=' + Date.now()); // evita caché
-      products = await res.json();
+      let arr = await res.json();
+
+      // Calcula precio si viene "precioCalc"
+      arr = arr.map(p=>{
+        if(!p.precioNum && p.precioCalc){
+          const monto = calcFinal(p.precioCalc);
+          p.precioNum = monto;
+          p.precio = fmt(monto);
+        }else{
+          // asegura string formateado si solo vino precioNum
+          if(p.precioNum && !p.precio) p.precio = fmt(p.precioNum);
+        }
+        return p;
+      });
+
+      products = arr;
       P = Object.fromEntries(products.map(p => [p.id, p]));
       render();        // pinta el catálogo
       renderCart();    // recalcula precios del carrito
@@ -404,7 +469,7 @@
       case 'precio-desc': list.sort((a,b) => (b.precioNum||0) - (a.precioNum||0)); break;
       case 'nombre-asc':  list.sort((a,b) => a.nombre.localeCompare(b.nombre, 'es')); break;
       case 'nombre-desc': list.sort((a,b) => b.nombre.localeCompare(a.nombre, 'es')); break;
-      default: /* recientes: mantener orden del JSON */ break;
+      default: /* recientes */ break;
     }
 
     grid.innerHTML = list.length
@@ -421,7 +486,7 @@
     });
   });
 
-  // ====== MODAL PRODUCTO (galería + WA + agregar) ======
+  // ====== MODAL PRODUCTO ======
   let CURRENT=null, GALIDX=0;
   function openProduct(id){
     const p = P[id]; if(!p) return; CURRENT=p;
@@ -453,7 +518,7 @@
   function galNext(){ if(!CURRENT) return; const imgs=(CURRENT.imgs&&CURRENT.imgs.length)?CURRENT.imgs:[CURRENT.img]; GALIDX=(GALIDX+1)%imgs.length; byId('galMain').src=imgs[GALIDX]; document.querySelectorAll('#galThumbs img').forEach((t,idx)=>t.classList.toggle('active', idx===GALIDX)); }
   window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeProduct(); });
 
-  // ====== CARRITO (localStorage + drawer + checkout WA) ======
+  // ====== CARRITO ======
   const CART_KEY='tecnolap_cart_v1';
   let cart = JSON.parse(localStorage.getItem(CART_KEY)||'[]'); // [{id,qty}]
   const saveCart=()=>localStorage.setItem(CART_KEY, JSON.stringify(cart));
@@ -502,7 +567,11 @@
         </div>
       </div>`;
     }).join('');
-    const sub = subtotal(); const igv = sub*0.18; const tot = sub+igv;
+
+    // Asumimos precios con IGV incluido: IGV = sub - (sub/1.18); Total = Subtotal
+    const sub = subtotal();
+    const igv = sub - (sub/1.18);
+    const tot = sub;
     byId('cartSubtotal').textContent = fmt(sub);
     byId('cartIGV').textContent = fmt(igv);
     byId('cartTotal').textContent = fmt(tot);
