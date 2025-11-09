@@ -35,16 +35,39 @@
     "stockLima": 1
   },
   {
-    "id": "imp-001",
-    "cat": "impresoras",
-    "nombre": "Impresora Epson L3250 (tanque)",
-    "precioNum": 799,
-    "precio": "S/ 799",
-    "img": "img/imp-1.jpg",
-    "imgs": ["img/imp-1.jpg","img/hero-2.jpg"],
-    "desc": "Multifunción Wi-Fi, bajo costo por página.",
-    "detalles": "Ideal para oficinas con alto volumen.",
-    "specs": ["Multifunción","Wi-Fi","Tanque de tinta"]
+    "id": "lap-len-v15g2-n4500",
+    "cat": "laptops",
+    "nombre": "Lenovo V15 G2 IJL • 15.6\" FHD • Celeron N4500 • 8GB • 256GB",
+    "precioCalc": { "usd": 205, "igvIncluido": false },
+    "img": "img/laptops/len-v15g2-n4500-1.jpg",
+    "imgs": [
+      "img/laptops/len-v15g2-n4500-1.jpg",
+      "img/laptops/len-v15g2-n4500-2.jpg",
+      "img/laptops/len-v15g2-n4500-3.jpg"
+    ],
+    "desc": "Notebook 15.6\" para oficina/estudio, Wi-Fi 6 y SSD NVMe.",
+    "detalles": "Garantía del representante. No incluye sistema operativo.",
+    "specs": [
+      "Intel Celeron N4500 (2 núcleos, 1.1 / 2.8 GHz)",
+      "8GB DDR4-2933 SODIMM",
+      "256GB SSD M.2 2242 NVMe",
+      "15.6\" FHD (1920×1080) TN antirreflejo",
+      "Intel UHD Graphics",
+      "Wi-Fi 6 802.11ax 2×2, BT 5.2, LAN 1Gbps",
+      "Puertos: USB-C 3.2 Gen1 (datos), USB-A 3.2 Gen1, USB-A 2.0, HDMI 1.4b, RJ45, audio/mic combo",
+      "Cámara 720p con obturador, micrófono dual",
+      "Batería 38 Wh • 1.7 kg",
+      "Teclado Español (LA), no retroiluminado",
+      "TPM 2.0, Kensington Nano Slot",
+      "Color: Negro",
+      "Sin sistema operativo"
+    ],
+    "codigo": "NBLEN82QY00SALM",
+    "minicodigo": "471298",
+    "fabricanteCod": "82QY00SALM",
+    "marca": "Lenovo",
+    "modelo": "V15 G2 IJL",
+    "stockLima": 1
   },
   {
     "id": "imp-002",
