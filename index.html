@@ -49,11 +49,21 @@
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:24px}
 
+    /* Announcement bar (envíos diarios) */
+    .announce{
+      background:linear-gradient(90deg,#00e5ff,#7c4dff);
+      color:#061019; font-weight:800; letter-spacing:.3px;
+      display:flex; justify-content:center; align-items:center; gap:10px;
+      padding:8px 12px; font-size:14px
+    }
+    .announce .truck{filter:grayscale(0)}
+    @media(max-width:720px){ .announce{font-size:13px;padding:7px 10px} }
+
     /* Nav */
     header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(11,16,32,.9),rgba(11,16,32,.6));backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
     .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:var(--shadow);font-weight:800}
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand img{height:40px;width:auto;display:block;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35))}
     nav a{opacity:.9;margin-left:18px}
     .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#061019;font-weight:700;box-shadow:var(--shadow);border:0;cursor:pointer}
     .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.15);background:transparent;color:var(--text);cursor:pointer}
@@ -152,10 +162,17 @@
   </style>
 </head>
 <body>
+
+  <!-- Barra de envíos -->
+  <div class="announce">
+    🚚 Envíos diarios a todo el Perú · 💳 Facturación electrónica · 🛡️ Garantía oficial
+  </div>
+
   <header>
     <div class="container nav">
       <div class="brand">
-        <div class="logo">TL</div>
+        <!-- Usa SVG si lo tienes; si usas PNG, cambia a logo-tecnolap.png -->
+        <img src="img/logo-tecnolap.svg" alt="Grupo Tecnolap EIRL" onerror="this.src='img/logo-tecnolap.png'">
         <div>
           <strong>Grupo Tecnolap EIRL</strong>
           <div class="mini">Hardware • Software • Soporte</div>
@@ -301,7 +318,7 @@
 
   <script>
   // ====== CONTACTO ======
-  const WA_PHONE = '51912811769'; // solo números, con 51
+  const WA_PHONE = '51912811769';
   const TEL_SHOW = '+51 912 811 769';
   const MAIL = 'ventas@grupotecnolap.com';
 
@@ -316,15 +333,15 @@
 
   // ====== PRECIOS: TC + recargos + redondeo ======
   let TC = parseFloat(localStorage.getItem('TC_val') || '3.39');
-  const RECARGO_PCT = 0.03;   // +3% final
-  const RECARGO_FIJO = 110;   // +S/110 final
+  const RECARGO_PCT = 0.03;     // +3%
+  const RECARGO_FIJO = 110;     // +S/110
 
   function round50(n){
-    const soles = Math.floor(n);
-    const cents = Math.round((n - soles) * 100);
-    if (cents <= 9) return soles;         // .00
-    if (cents <= 59) return soles + 0.50; // .50
-    return soles + 1.00;                  // siguiente sol
+    const s = Math.floor(n);
+    const c = Math.round((n - s) * 100);
+    if (c <= 9) return s;
+    if (c <= 59) return s + 0.50;
+    return s + 1.00;
   }
   function calcFinal({usd=null, pen=null, igvIncluido=false}){
     let base = usd!=null ? usd*TC : (pen ?? 0);
@@ -390,13 +407,15 @@
   // ====== Cargar productos desde JSON ======
   let products = [];
   let P = {};
+  const getRef = (p)=> p.promoId || p.codigo || p.codFabricante || p.minicodigo || '';
+  const isPromo = (p)=> Boolean(p.promoId);
+
   async function loadProducts(){
     try{
       const res = await fetch('data/products.json?v=' + Date.now());
       let arr = await res.json();
 
       arr = arr.map(p=>{
-        // si viene precioCalc, se calcula; si viene precioNum solamente, se formatea
         if(!p.precioNum && p.precioCalc){
           const monto = calcFinal(p.precioCalc);
           p.precioNum = monto;
@@ -436,15 +455,12 @@
     render(document.querySelector('.tab.active')?.dataset.cat || 'todo');
   });
 
-  // ====== Helpers ======
-  const isPromo = (p)=> ((p.ref||'').toUpperCase().includes('PROMOCION') || (p.ref||'').toUpperCase().includes('PROMO'));
-
   // ====== RENDER TARJETAS + TABS ======
   const grid = byId('productGrid');
 
   function card(p){
-    const ref = p.ref || p.codigo || p.codFabricante || p.minicodigo || '';
-    const inStock = Number(p.stockLima ?? 1) > 0;
+    const ref = getRef(p);
+    const inStock = Number(p.stockLima ?? 1) > 0; // si no viene, asumimos disponible
     const offer = isPromo(p);
 
     return `<div class="card item ${inStock ? '' : 'disabled'}">
@@ -472,14 +488,14 @@
 
     if (searchTerm) {
       list = list.filter(p => {
-        const ref = p.ref || p.codigo || p.codFabricante || p.minicodigo || '';
-        const hay = `${p.nombre} ${ref} ${p.desc||''} ${(p.specs||[]).join(' ')}`.toLowerCase();
+        const hay = `${p.nombre} ${getRef(p)} ${p.desc||''} ${(p.specs||[]).join(' ')}`.toLowerCase();
         return hay.includes(searchTerm);
       });
     }
 
     if (onlyStock?.checked) {
-      list = list.filter(p => Number(p.stockLima ?? 0) > 0);
+      // ⚠️ Importante: si no viene stockLima, asumimos 1
+      list = list.filter(p => Number(p.stockLima ?? 1) > 0);
     }
 
     switch (orderBy) {
@@ -496,9 +512,9 @@
   }
 
   const tabsEl = document.getElementById('tabs');
-  tabsEl.querySelectorAll('.tab').forEach(btn => {
+  tabsEl.querySelectorAll('button').forEach(btn => {
     btn.addEventListener('click', () => {
-      tabsEl.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tabsEl.querySelectorAll('button').forEach(t => t.classList.remove('active'));
       btn.classList.add('active');
       render(btn.dataset.cat);
     });
@@ -508,7 +524,7 @@
   let CURRENT=null, GALIDX=0;
   function openProduct(id){
     const p = P[id]; if(!p) return; CURRENT=p;
-    const ref = p.ref || p.codigo || p.codFabricante || p.minicodigo || '';
+    const ref = getRef(p);
 
     byId('pdName').textContent = p.nombre;
     byId('pdRef').textContent = ref ? `Referencia: ${ref}` : '';
@@ -532,7 +548,7 @@
     thumbs.querySelectorAll('img').forEach((el,i)=>el.addEventListener('click', ()=>set(i)));
     set(0);
 
-    // Mostrar/ocultar OFERTA en modal
+    // OFERTA en modal si hay promo
     byId('galOffer').style.display = isPromo(p) ? 'inline-block' : 'none';
 
     byId('productModal').classList.add('open'); document.body.style.overflow='hidden';
@@ -609,7 +625,7 @@
     const lines = cart.map(c=>{
       const p=P[c.id];
       const s=fmt((p.precioNum||0)*c.qty);
-      const ref = p.ref || p.codigo || p.codFabricante || p.minicodigo || '';
+      const ref = getRef(p);
       return `• ${p?.nombre} x${c.qty} — ${s}${ref ? ' [REF: ' + ref + ']' : ''}`;
     }).join('%0A');
     const msg = `Hola, quiero comprar:%0A${lines}%0A%0ATotal carrito: ${byId('cartTotal').textContent}%0A¿Opciones de pago y entrega (Lima/Provincias)?`;
