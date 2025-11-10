@@ -32,7 +32,7 @@
     "fabricanteCod": "ADV-CN4058",
     "marca": "Advance",
     "modelo": "CN4058",
-    "stockLima": 1
+    "stockLima": 20
   },
   {
     "id": "lap-len-v15g2-n4500",
@@ -46,7 +46,7 @@
       "img/laptops/len-v15g2-n4500-3.jpg"
     ],
     "desc": "Notebook 15.6\" para oficina/estudio, Wi-Fi 6 y SSD NVMe.",
-    "detalles": "Garantía del representante. No incluye sistema operativo.",
+    "detalles": "Garantía 12 meses. No incluye sistema operativo.",
     "specs": [
       "Intel Celeron N4500 (2 núcleos, 1.1 / 2.8 GHz)",
       "8GB DDR4-2933 SODIMM",
@@ -67,19 +67,49 @@
     "fabricanteCod": "82QY00SALM",
     "marca": "Lenovo",
     "modelo": "V15 G2 IJL",
-    "stockLima": 1
+    "stockLima": 20
   },
   {
-    "id": "imp-002",
-    "cat": "impresoras",
-    "nombre": "HP Laser 107w",
-    "precioNum": 449,
-    "precio": "S/ 449",
-    "img": "img/imp-2.jpg",
-    "imgs": ["img/imp-2.jpg","img/hero-2.jpg"],
-    "desc": "Láser monocromo compacta con Wi-Fi.",
-    "detalles": "Rápida y compacta para documentos.",
-    "specs": ["Láser B/N","Wi-Fi","Compacta"]
+    "id": "lap-hp-250g10-n305-8-256",
+    "cat": "laptops",
+    "nombre": "HP 250 G10 15.6\" • Core i3-N305 • 8GB • 256GB",
+    "img": "img/laptops/hp-250g10-1.jpg",
+    "imgs": [
+      "img/laptops/hp-250g10-1.jpg",
+      "img/laptops/hp-250g10-2.jpg",
+      "img/laptops/hp-250g10-3.jpg"
+    ],
+    "desc": "Línea comercial 15.6\". Wi-Fi 6, teclado español. Ideal para oficina/estudio.",
+    "detalles": "Garantía del representante en Perú.",
+    "specs": [
+      "Intel Core i3-N305 (8 núcleos) 1.80 / 3.80 GHz",
+      "8GB DDR4-3200 SODIMM (1×8GB, 2 ranuras, máx. 32GB)",
+      "SSD 256GB M.2 PCIe NVMe",
+      "Pantalla 15.6\" HD SVA 1366×768 antirreflejo",
+      "Intel UHD Graphics",
+      "Wi-Fi 6 (802.11ax 2×2) • BT 5.3 • LAN 1GbE",
+      "Puertos: 2×USB-A 3.2 Gen1, 1×USB-C 3.2 Gen1 (datos), HDMI 1.4b, RJ-45, combo audio",
+      "Cámara 720p con micrófono",
+      "Batería 41 Wh",
+      "Peso 1.52 kg",
+      "FreeDOS 3.0 (sin sistema operativo)",
+      "TPM 2.0 • Color: gris"
+    ],
+
+    /* Códigos del fabricante (referencia) */
+    "codigo": "NBHPB83U6AT",
+    "fabricanteCod": "B83U6AT#ABM",
+    "marca": "HP",
+    "modelo": "250 G10",
+
+    /* 🔴 PROMO: usa este ID para que salga el badge y la cinta OFERTA */
+    "promoId": "#PROMOCIONU2225",
+
+    /* Precio PROMO en USD + IGV aparte (Deltron indica “desde US$ 264 + IGV”) */
+    "precioCalc": { "usd": 264, "igvIncluido": false },
+
+    /* Stock Lima (el portal muestra > 20) */
+    "stockLima": 20
   },
   {
     "id": "cctv-001",
