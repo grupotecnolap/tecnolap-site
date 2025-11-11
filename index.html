@@ -18,18 +18,6 @@
   <meta property="og:url" content="https://grupotecnolap.com/">
   <meta property="og:image" content="https://grupotecnolap.com/img/hero-1.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Grupo Tecnolap EIRL",
-    "url": "https://grupotecnolap.com/",
-    "logo": "https://grupotecnolap.com/favicon.ico",
-    "telephone": "+51 912 811 769",
-    "email": "ventas@grupotecnolap.com",
-    "address": { "@type": "PostalAddress", "addressLocality": "Lima", "addressCountry": "PE" }
-  }
-  </script>
 
   <style>
     :root{
@@ -49,21 +37,20 @@
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:24px}
 
-    /* Announcement bar (envíos diarios) */
-    .announce{
-      background:linear-gradient(90deg,#00e5ff,#7c4dff);
-      color:#061019; font-weight:800; letter-spacing:.3px;
-      display:flex; justify-content:center; align-items:center; gap:10px;
-      padding:8px 12px; font-size:14px
+    /* Topbar */
+    .topbar{
+      display:flex;justify-content:center;align-items:center;gap:16px;
+      padding:8px 12px;font-size:13px;color:#eaf1ff;background:linear-gradient(90deg, rgba(79,195,247,.15), rgba(124,77,255,.15));
+      border-bottom:1px solid rgba(255,255,255,.08)
     }
-    .announce .truck{filter:grayscale(0)}
-    @media(max-width:720px){ .announce{font-size:13px;padding:7px 10px} }
+    .topbar .chip{padding:6px 10px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.03)}
+    .topbar strong{font-weight:800}
 
     /* Nav */
     header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(11,16,32,.9),rgba(11,16,32,.6));backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
     .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:14px}
-    .brand img{height:40px;width:auto;display:block;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35))}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:var(--shadow);font-weight:800}
     nav a{opacity:.9;margin-left:18px}
     .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#061019;font-weight:700;box-shadow:var(--shadow);border:0;cursor:pointer}
     .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.15);background:transparent;color:var(--text);cursor:pointer}
@@ -95,8 +82,17 @@
       background:#0f1530;border:1px solid rgba(255,255,255,.12);
       color:var(--text);border-radius:12px;padding:10px 12px;outline:none
     }
-    .toolbar label{display:inline-flex;gap:8px;align-items:center;cursor:pointer}
-    .toolbar input[type="checkbox"]{accent-color:#7c4dff;border:none}
+
+    /* Categoria chips */
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+    .tab{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.15);cursor:pointer;color:var(--muted);background:transparent}
+    .tab.active{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#061019;border-color:transparent;font-weight:700}
+
+    /* Segmentos (solo laptops) */
+    details.segmentos{margin:6px 0 14px}
+    .segwrap{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .seg{padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.15);display:inline-flex;gap:8px;align-items:center}
+    .seg input{accent-color:#7c4dff}
 
     /* Productos */
     .products .item img{
@@ -162,17 +158,18 @@
   </style>
 </head>
 <body>
-
-  <!-- Barra de envíos -->
-  <div class="announce">
-    🚚 Envíos diarios a todo el Perú · 💳 Facturación electrónica · 🛡️ Garantía oficial
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <span class="chip">🚚 <strong>Envíos todos los días</strong> a todo el Perú</span>
+    <span class="chip">⚡ Entrega 24–48h Lima</span>
+    <span class="chip">💳 Transferencia • Yape • Plin</span>
+    <span class="chip">🛡️ Garantía oficial</span>
   </div>
 
   <header>
     <div class="container nav">
       <div class="brand">
-        <!-- Usa SVG si lo tienes; si usas PNG, cambia a logo-tecnolap.png -->
-        <img src="img/logo-tecnolap.svg" alt="Grupo Tecnolap EIRL" onerror="this.src='img/logo-tecnolap.png'">
+        <div class="logo">TL</div>
         <div>
           <strong>Grupo Tecnolap EIRL</strong>
           <div class="mini">Hardware • Software • Soporte</div>
@@ -192,11 +189,11 @@
     <section class="hero">
       <div>
         <h1>Tu partner tecnológico en Lima y provincias</h1>
-        <p>Venta de laptops, PCs, impresoras, CCTV, UPS y más. Instalación, mantenimiento y soporte técnico para empresas.</p>
+        <p>Venta de laptops, PCs, impresoras, CCTV, UPS y más. Instalación, mantenimiento y soporte técnico.</p>
         <div class="kpis">
           <div class="item">Garantía oficial</div>
-          <div class="item">Facturación electrónica</div>
           <div class="item">Atención a empresas</div>
+          <div class="item">Envíos a todo el Perú</div>
         </div>
         <div class="cta">
           <a class="btn" id="cta-whatsapp" href="#">💬 Cotiza por WhatsApp</a>
@@ -226,17 +223,29 @@
           <option value="nombre-asc">Nombre A–Z</option>
           <option value="nombre-desc">Nombre Z–A</option>
         </select>
-        <label><input type="checkbox" id="onlyStock"> Solo con stock en Lima</label>
       </div>
 
       <div class="tabs" id="tabs">
         <button type="button" class="tab active" data-cat="todo">Todo</button>
         <button type="button" class="tab" data-cat="laptops">Laptops</button>
-        <button type="button" class="tab" data-cat="refurb">Laptops reacondicionadas</button>
         <button type="button" class="tab" data-cat="impresoras">Impresoras</button>
         <button type="button" class="tab" data-cat="cctv">Cámaras & CCTV</button>
         <button type="button" class="tab" data-cat="ups">UPS</button>
+        <button type="button" class="tab" data-cat="pcs">PCs</button>
       </div>
+
+      <!-- Segmentos (solo visible cuando se selecciona Laptops o Todo) -->
+      <details class="segmentos" id="segBox" open style="display:none">
+        <summary class="mini">Segmento (Laptops)</summary>
+        <div class="segwrap">
+          <label class="seg"><input type="checkbox" value="consumo"  class="segchk"> Consumo</label>
+          <label class="seg"><input type="checkbox" value="empresarial" class="segchk"> Empresarial/Workstation</label>
+          <label class="seg"><input type="checkbox" value="gamer" class="segchk"> Gamer</label>
+          <label class="seg"><input type="checkbox" value="refurb" class="segchk"> Refurb</label>
+          <button class="pill" id="segClear" type="button">Limpiar</button>
+        </div>
+      </details>
+
       <div class="grid products" id="productGrid"></div>
     </section>
 
@@ -256,7 +265,6 @@
     <section id="contacto" style="margin-top:26px">
       <h2>Contacto</h2>
       <div class="card">
-        <p class="mini">Actualiza estos datos y tu WhatsApp antes de publicar.</p>
         <p>📞 <strong id="telMostrar"></strong> &nbsp;•&nbsp; ✉️ <strong id="mailMostrar"></strong> &nbsp;•&nbsp; 📍 Lima, Perú</p>
         <div class="cta">
           <a class="btn" id="cta-mail" href="#">Pedir cotización</a>
@@ -267,8 +275,10 @@
   </main>
 
   <footer>
-    © <span id="y"></span> Grupo Tecnolap EIRL · RUC 20614167026 · Todos los derechos reservados
-  </footer>
+    © <span id="y"></span> Grupo Tecnolap EIRL · RUC 20614167026 · 
+    <a href="politica.html">Política de Privacidad</a> · 
+    <a href="terminos.html">Términos y Condiciones</a>
+    </footer>
 
   <!-- MODAL PRODUCTO -->
   <div id="productModal" class="modal">
@@ -331,22 +341,34 @@
   document.getElementById('cta-mail').href =
     `mailto:${MAIL}?subject=Cotización%20Tecnolap&body=Hola,%20necesito%20cotización.`;
 
-  // ====== PRECIOS: TC + recargos + redondeo ======
+  // ====== PRECIOS ======
+  // TC se guarda en localStorage y se refresca 1 vez al día
   let TC = parseFloat(localStorage.getItem('TC_val') || '3.39');
-  const RECARGO_PCT = 0.03;     // +3%
-  const RECARGO_FIJO = 110;     // +S/110
+  const RECARGO_PCT  = 0.03;   // regla general (no-laptops y laptops > S/2000)
+  const RECARGO_FIJO = 110;
+  const MARGEN_LOW_LAPTOP_SINIGV = 100;   // S/100 + IGV => 118 fijos para laptops <= 2000
 
   function round50(n){
-    const s = Math.floor(n);
-    const c = Math.round((n - s) * 100);
-    if (c <= 9) return s;
-    if (c <= 59) return s + 0.50;
-    return s + 1.00;
+    const soles = Math.floor(n);
+    const cents = Math.round((n - soles) * 100);
+    if (cents <= 9) return soles;         // .00
+    if (cents <= 59) return soles + 0.50; // .50
+    return soles + 1.00;                  // siguiente sol
   }
-  function calcFinal({usd=null, pen=null, igvIncluido=false}){
+
+  // NUEVA fórmula con reglas:
+  // - Si cat=laptops y (base + IGV) <= 2000 => sumar S/100 + IGV (S/118)
+  // - En otros casos => +3% y +S/110
+  function calcFinal({usd=null, pen=null, igvIncluido=false}, cat=''){
     let base = usd!=null ? usd*TC : (pen ?? 0);
-    if(!igvIncluido) base *= 1.18;
-    const total = base*(1+RECARGO_PCT) + RECARGO_FIJO;
+    if(!igvIncluido) base *= 1.18; // asegurar precio con IGV
+
+    let total = base;
+    if ((cat||'').toLowerCase()==='laptops' && base <= 2000){
+      total = base + (MARGEN_LOW_LAPTOP_SINIGV * 1.18/1.00); // 100 + IGV = 118
+    }else{
+      total = base*(1+RECARGO_PCT) + RECARGO_FIJO;
+    }
     return round50(total);
   }
 
@@ -404,44 +426,54 @@
   }
   document.addEventListener('keydown', (e)=>{ if(e.shiftKey && (e.key==='T' || e.key==='t')) setManualTC(); });
 
-  // ====== Cargar productos desde JSON ======
+  // ====== Cargar productos desde múltiples JSON ======
+  const DATA_FILES = [
+    'data/laptops.json',
+    'data/impresoras.json',
+    'data/cctv.json',
+    'data/ups.json',
+    'data/pcs.json'
+  ];
+
   let products = [];
   let P = {};
-  const getRef = (p)=> p.promoId || p.codigo || p.codFabricante || p.minicodigo || '';
-  const isPromo = (p)=> Boolean(p.promoId);
-
   async function loadProducts(){
-    try{
-      const res = await fetch('data/products.json?v=' + Date.now());
-      let arr = await res.json();
-
-      arr = arr.map(p=>{
-        if(!p.precioNum && p.precioCalc){
-          const monto = calcFinal(p.precioCalc);
-          p.precioNum = monto;
-          p.precio = fmt(monto);
-        }else if(p.precioNum && !p.precio){
-          p.precio = fmt(p.precioNum);
-        }
-        return p;
-      });
-
-      products = arr;
-      P = Object.fromEntries(products.map(p => [p.id, p]));
-      render();
-      renderCart();
-    }catch(e){
-      console.error('No se pudieron cargar los productos:', e);
+    products = [];
+    for (const url of DATA_FILES){
+      try{
+        const r = await fetch(url + '?v=' + Date.now());
+        if(!r.ok) continue;
+        const arr = await r.json();
+        products.push(...arr);
+      }catch(e){ /* archivo ausente o error: lo ignoro */ }
     }
+
+    // normalización + cálculo de precio
+    products = products.map(p=>{
+      if (p.cat === 'refurb'){ p.segmento = p.segmento || 'refurb'; p.cat = 'laptops'; }
+      p.segmento = (p.segmento || 'consumo').toLowerCase();
+
+      // calcular precio si viene precioCalc
+      if(!p.precioNum && p.precioCalc){
+        const monto = calcFinal(p.precioCalc, p.cat);
+        p.precioNum = monto; p.precio = fmt(monto);
+      }else if(p.precioNum && !p.precio){
+        p.precio = fmt(p.precioNum);
+      }
+      return p;
+    });
+
+    P = Object.fromEntries(products.map(p => [p.id, p]));
+    render();
+    renderCart();
   }
   loadProducts();
 
-  // ====== Buscador + Orden + Filtro stock ======
+  // ====== Buscador + Orden ======
   let searchTerm = '';
   let orderBy = 'recientes';
   const q = document.getElementById('q');
   const sortSel = document.getElementById('sort');
-  const onlyStock = document.getElementById('onlyStock');
 
   q?.addEventListener('input', () => {
     searchTerm = q.value.trim().toLowerCase();
@@ -451,16 +483,38 @@
     orderBy = sortSel.value;
     render(document.querySelector('.tab.active')?.dataset.cat || 'todo');
   });
-  onlyStock?.addEventListener('change', () => {
-    render(document.querySelector('.tab.active')?.dataset.cat || 'todo');
+
+  // ====== Segmentos UI ======
+  const segBox = byId('segBox');
+  const segSet = new Set();
+  function refreshSegVisibility(cat){
+    segBox.style.display = (cat==='laptops' || cat==='todo') ? '' : 'none';
+  }
+  document.querySelectorAll('.segchk').forEach(ch=>{
+    ch.addEventListener('change', ()=>{
+      segSet.clear();
+      document.querySelectorAll('.segchk:checked').forEach(c => segSet.add(c.value));
+      render(document.querySelector('.tab.active')?.dataset.cat || 'todo');
+    });
   });
+  byId('segClear').addEventListener('click', ()=>{
+    document.querySelectorAll('.segchk').forEach(c=>c.checked=false);
+    segSet.clear(); render(document.querySelector('.tab.active')?.dataset.cat || 'todo');
+  });
+
+  // ====== Helpers ======
+  const isPromo = (p) => {
+    const pr = (p.promoId || p.ref || '').toUpperCase();
+    return pr.includes('PROMOCION') || pr.includes('PROMO');
+  };
+  const refDe = (p) => (p.promoId || p.ref || p.codigo || p.fabricanteCod || p.codFabricante || p.minicodigo || '');
 
   // ====== RENDER TARJETAS + TABS ======
   const grid = byId('productGrid');
 
   function card(p){
-    const ref = getRef(p);
-    const inStock = Number(p.stockLima ?? 1) > 0; // si no viene, asumimos disponible
+    const ref = refDe(p);
+    const inStock = Number(p.stockLima ?? 1) > 0;
     const offer = isPromo(p);
 
     return `<div class="card item ${inStock ? '' : 'disabled'}">
@@ -474,7 +528,7 @@
       <h3>${p.nombre}</h3>
       <div class="mini">${p.desc || ''}</div>
       <div class="cta" style="justify-content:space-between;align-items:center">
-        <span style="opacity:.9;font-weight:700">${p.precio}</span>
+        <span style="opacity:.9;font-weight:700">${p.precio || ''}</span>
         <div style="display:flex;gap:8px">
           <button type="button" class="pill" onclick="openProduct('${p.id}')">Ver detalles</button>
           <button type="button" class="pill" ${inStock ? '' : 'disabled'} onclick="addToCart('${p.id}')">Agregar</button>
@@ -484,18 +538,20 @@
   }
 
   function render(cat='todo'){
+    refreshSegVisibility(cat);
+
     let list = (cat==='todo') ? products.slice() : products.filter(p => p.cat === cat);
+
+    if (segSet.size > 0){
+      list = list.filter(p => p.cat!=='laptops' ? true : segSet.has((p.segmento||'consumo')));
+    }
 
     if (searchTerm) {
       list = list.filter(p => {
-        const hay = `${p.nombre} ${getRef(p)} ${p.desc||''} ${(p.specs||[]).join(' ')}`.toLowerCase();
+        const ref = refDe(p);
+        const hay = `${p.nombre} ${ref} ${p.desc||''} ${(p.specs||[]).join(' ')}`.toLowerCase();
         return hay.includes(searchTerm);
       });
-    }
-
-    if (onlyStock?.checked) {
-      // ⚠️ Importante: si no viene stockLima, asumimos 1
-      list = list.filter(p => Number(p.stockLima ?? 1) > 0);
     }
 
     switch (orderBy) {
@@ -503,7 +559,7 @@
       case 'precio-desc': list.sort((a,b) => (b.precioNum||0) - (a.precioNum||0)); break;
       case 'nombre-asc':  list.sort((a,b) => a.nombre.localeCompare(b.nombre, 'es')); break;
       case 'nombre-desc': list.sort((a,b) => b.nombre.localeCompare(a.nombre, 'es')); break;
-      default: /* recientes */ break;
+      default: break;
     }
 
     grid.innerHTML = list.length
@@ -512,9 +568,9 @@
   }
 
   const tabsEl = document.getElementById('tabs');
-  tabsEl.querySelectorAll('button').forEach(btn => {
+  tabsEl.querySelectorAll('.tab').forEach(btn => {
     btn.addEventListener('click', () => {
-      tabsEl.querySelectorAll('button').forEach(t => t.classList.remove('active'));
+      tabsEl.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       btn.classList.add('active');
       render(btn.dataset.cat);
     });
@@ -524,21 +580,21 @@
   let CURRENT=null, GALIDX=0;
   function openProduct(id){
     const p = P[id]; if(!p) return; CURRENT=p;
-    const ref = getRef(p);
+    const ref = refDe(p);
 
     byId('pdName').textContent = p.nombre;
     byId('pdRef').textContent = ref ? `Referencia: ${ref}` : '';
     byId('pdCat').textContent = ({
       laptops:'Laptops',
-      refurb:'Laptops reacondicionadas',
       impresoras:'Impresoras',
       cctv:'Cámaras & CCTV',
-      ups:'UPS'
+      ups:'UPS',
+      pcs:'PCs'
     })[p.cat] || '';
-    byId('pdPrice').textContent = p.precio;
+    byId('pdPrice').textContent = p.precio || '';
     byId('pdDetalles').textContent = p.detalles || '';
     byId('pdSpecs').innerHTML = (p.specs || []).map(s=>`<li>• ${s}</li>`).join('');
-    byId('pdWA').href = waLink(`Hola, me interesa ${p.nombre} (${p.precio})${ref ? ' [REF: ' + ref + ']' : ''}. ¿Disponibilidad y entrega?`);
+    byId('pdWA').href = waLink(`Hola, me interesa ${p.nombre} (${p.precio||''})${ref ? ' [REF: ' + ref + ']' : ''}. ¿Disponibilidad y entrega?`);
     byId('pdAdd').onclick = ()=>addToCart(p.id, 1, true);
 
     const imgs = (p.imgs && p.imgs.length) ? p.imgs : [p.img];
@@ -548,7 +604,6 @@
     thumbs.querySelectorAll('img').forEach((el,i)=>el.addEventListener('click', ()=>set(i)));
     set(0);
 
-    // OFERTA en modal si hay promo
     byId('galOffer').style.display = isPromo(p) ? 'inline-block' : 'none';
 
     byId('productModal').classList.add('open'); document.body.style.overflow='hidden';
@@ -594,7 +649,7 @@
         <img src="${p.img}" alt="${p.nombre}" onerror="this.src='https://picsum.photos/seed/${p.id}/160/100'"/>
         <div>
           <div style="font-weight:700">${p.nombre}</div>
-          <div class="mini">${p.precio}</div>
+          <div class="mini">${p.precio||''}</div>
           <div class="qty" style="margin-top:6px">
             <button onclick="setQty('${c.id}', ${c.qty-1})">−</button>
             <span>${c.qty}</span>
@@ -608,7 +663,6 @@
       </div>`;
     }).join('');
 
-    // Precios con IGV incluido: IGV = sub - (sub/1.18); Total = Subtotal
     const sub = subtotal();
     const igv = sub - (sub/1.18);
     const tot = sub;
@@ -618,14 +672,13 @@
   }
   renderCart();
 
-  // Vaciar + Checkout
   byId('btnClear').onclick = ()=>{ cart=[]; saveCart(); renderCart(); };
   byId('btnCheckout').onclick = ()=>{
     if(cart.length===0) return;
     const lines = cart.map(c=>{
       const p=P[c.id];
       const s=fmt((p.precioNum||0)*c.qty);
-      const ref = getRef(p);
+      const ref = refDe(p);
       return `• ${p?.nombre} x${c.qty} — ${s}${ref ? ' [REF: ' + ref + ']' : ''}`;
     }).join('%0A');
     const msg = `Hola, quiero comprar:%0A${lines}%0A%0ATotal carrito: ${byId('cartTotal').textContent}%0A¿Opciones de pago y entrega (Lima/Provincias)?`;
@@ -636,5 +689,7 @@
   function checkHash(){ const m=location.hash.match(/#p=([a-z0-9-]+)/i); if(m) openProduct(m[1]); }
   window.addEventListener('hashchange', checkHash); checkHash();
   </script>
+  <script defer src="js/share.js"></script>
+  <script defer src="js/comments.js"></script>
 </body>
 </html>
