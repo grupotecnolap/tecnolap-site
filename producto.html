@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Producto | Grupo Tecnolap</title>
+  <meta name="description" content="Detalle de producto - Grupo Tecnolap" />
+  <link rel="icon" href="/img/favicon.png">
+  <style>
+    :root { --bg:#0e0f12; --card:#151922; --txt:#e7eaf3; --muted:#9aa3b2; --accent:#4ea1ff;}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+    header{padding:16px 20px;border-bottom:1px solid #222} a{color:var(--accent);text-decoration:none}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    .card{background:var(--card);border:1px solid #222;border-radius:16px;padding:20px}
+    .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:24px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+    .title{margin:0 0 8px;font-size:28px}
+    .muted{color:var(--muted);font-size:14px}
+    .price{font-size:26px;margin:16px 0}
+    .btn{display:inline-block;padding:12px 16px;border-radius:10px;background:var(--accent);color:#081018;font-weight:600}
+    .gal{display:grid;grid-template-columns:1fr;gap:12px}
+    .gal img{width:100%;border-radius:12px;border:1px solid #222;background:#0b0d11}
+    ul.spec{margin:10px 0 0;padding-left:18px}
+    .badge{display:inline-block;margin-right:8px;margin-top:6px;padding:6px 10px;border-radius:999px;background:#1a2230;color:#cbd3e3;font-size:13px;border:1px solid #233046}
+    .notfound{padding:28px;text-align:center}
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/">← Volver a inicio</a>
+  </header>
+
+  <div class="wrap">
+    <div id="notfound" class="card notfound" style="display:none">
+      <h2>No encontramos este producto</h2>
+      <p class="muted">Revisa el enlace o vuelve al inicio.</p>
+    </div>
+
+    <div id="view" class="card" style="display:none">
+      <div class="grid">
+        <div>
+          <div id="gal" class="gal"></div>
+        </div>
+        <div>
+          <h1 id="title" class="title"></h1>
+          <div id="brand" class="muted"></div>
+          <div id="badges"></div>
+          <div id="price" class="price"></div>
+          <a id="cta" class="btn" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+          <hr style="border:0;border-top:1px solid #232832;margin:18px 0">
+          <div id="desc" class="muted" style="line-height:1.6"></div>
+          <ul id="spec" class="spec"></ul>
+          <div id="codes" class="muted" style="margin-top:12px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  const params = new URLSearchParams(location.search);
+  const PRODUCT_ID = params.get('id');
+
+  // Archivos de datos a consultar (empieza con laptops; luego agregas más)
+  const DATA_FILES = [
+    '/data/laptops.json'
+    // '/data/monitores.json',
+    // '/data/impresoras.json',
+  ];
+
+  if(!PRODUCT_ID){
+    showNotFound(); return;
+  }
+
+  Promise.allSettled(DATA_FILES.map(u => fetch(u).then(r => r.json())))
+    .then(results => {
+      const all = [];
+      for(const r of results){
+        if(r.status === 'fulfilled' && Array.isArray(r.value)) all.push(...r.value);
+      }
+      const p = all.find(x => x.id === PRODUCT_ID);
+      if(!p){ showNotFound(); return; }
+      renderProduct(p);
+    })
+    .catch(()=> showNotFound());
+
+  function usdToPen(usd){
+    // usar el mismo tipo de cambio que uses en la web/tienda
+    const rate = 3.80; // ajusta si quieres
+    return Math.round(usd * rate);
+  }
+
+  function renderProduct(p){
+    // título y marca
+    document.getElementById('title').textContent = p.nombre || '(Producto sin nombre)';
+    document.getElementById('brand').textContent = [p.marca, p.modelo].filter(Boolean).join(' · ');
+
+    // badges/segmentos
+    const badges = [];
+    if(p.cat) badges.push(p.cat.toUpperCase());
+    if(p.segmento) badges.push(p.segmento);
+    if(p.promoId) badges.push(p.promoId.replace('#',''));
+    document.getElementById('badges').innerHTML = badges.map(b=>`<span class="badge">${escapeHtml(b)}</span>`).join('');
+
+    // precio
+    const priceBox = document.getElementById('price');
+    if(p.precioCalc && typeof p.precioCalc.usd === 'number'){
+      const pen = usdToPen(p.precioCalc.usd);
+      const igv = p.precioCalc.igvIncluido ? 'IGV inc.' : 'precios sin IGV';
+      priceBox.textContent = `S/ ${pen} (${igv})`;
+    } else {
+      priceBox.textContent = 'Precio a consultar';
+    }
+
+    // CTA WhatsApp
+    const wmsg = encodeURIComponent(`Hola, estoy interesado en: ${p.nombre} (ID: ${p.id})`);
+    document.getElementById('cta').href = `https://wa.me/51999999999?text=${wmsg}`; // cambia al WhatsApp real
+
+    // descripción y specs
+    document.getElementById('desc').textContent = p.desc || '';
+    document.getElementById('spec').innerHTML = (p.specs || []).map(s=>`<li>${escapeHtml(s)}</li>`).join('');
+
+    // códigos
+    const codes = [];
+    if(p.codigo) codes.push(`Código interno: ${p.codigo}`);
+    if(p.fabricanteCod) codes.push(`Part number: ${p.fabricanteCod}`);
+    if(p.minicodigo) codes.push(`Minicódigo: ${p.minicodigo}`);
+    document.getElementById('codes').textContent = codes.join(' · ');
+
+    // galería
+    const gal = document.getElementById('gal');
+    const imgs = Array.isArray(p.imgs) && p.imgs.length ? p.imgs : (p.img ? [p.img] : []);
+    gal.innerHTML = imgs.map(src => `<img loading="lazy" alt="${escapeHtml(p.nombre||'Producto')}" src="/${src.replace(/^\/+/,'')}">`).join('');
+
+    document.getElementById('view').style.display = '';
+  }
+
+  function showNotFound(){
+    document.getElementById('notfound').style.display = '';
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+})();
+</script>
+</body>
+</html>
