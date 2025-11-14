@@ -322,7 +322,7 @@
 
   <!-- MODAL PRODUCTO -->
   <div id="productModal" class="modal">
-    <div class="modal__overlay" onclick="closeProduct"></div>
+    <div class="modal__overlay" onclick="closeProduct()"></div>
     <div class="modal__box">
       <button class="modal__close" aria-label="Cerrar" onclick="closeProduct()">✕</button>
       <div class="modal__left">
@@ -463,6 +463,7 @@
   // ====== Cargar productos ======
   const DATA_FILES = [
     'data/laptops.json',
+    'data/refurb.json',
     'data/impresoras.json',
     'data/cctv.json',
     'data/ups.json',
@@ -605,9 +606,7 @@
     const ref = refDe(p);
     byId('pdName').textContent = p.nombre;
     byId('pdRef').textContent = ref ? `Referencia: ${ref}` : '';
-    byId('pdCat').textContent = ({
-      laptops:'Laptops', impresoras:'Impresoras', cctv:'Cámaras & CCTV', ups:'UPS', pcs:'PCs'
-    })[p.cat] || '';
+    byId('pdCat').textContent = ((({laptops:'Laptops', impresoras:'Impresoras', cctv:'Cámaras & CCTV', ups:'UPS', pcs:'PCs'})[p.cat]) || '') + (p.segmento === 'refurb' ? ' · Refurb' : '');
     byId('pdPrice').textContent = p.precio || '';
     byId('pdDetalles').textContent = p.detalles || '';
     byId('pdSpecs').innerHTML = (p.specs || []).map(s=>`<li>• ${s}</li>`).join('');

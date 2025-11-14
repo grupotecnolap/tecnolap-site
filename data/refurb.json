@@ -1,0 +1,158 @@
+[
+  {
+    "id": "ref-hp-14ck0011la-i5-6gen-8-256",
+    "cat": "refurb",
+    "segmento": "refurb",
+    "nombre": "HP 14-ck0011la • 14\" • Core i5 6ª • 8GB • 256GB (Refurb)",
+    "precioNum": 650,
+    "img": "img/refurb/hp-14ck0011la-i5-6gen-8-256-14-1.jpg",
+    "imgs": [
+      "img/refurb/hp-14ck0011la-i5-6gen-8-256-14-1.jpg",
+      "img/refurb/hp-14ck0011la-i5-6gen-8-256-14-2.jpg",
+      "img/refurb/hp-14ck0011la-i5-6gen-8-256-14-3.jpg"
+    ],
+    "desc": "Refurb grado B. 14\" ideal para estudio/oficina.",
+    "detalles": "Estado: grado B (sin roturas). Batería ~1h. Incluye cargador genérico. Garantía 6 meses.",
+    "specs": [
+      "Intel Core i5 6ª generación",
+      "8GB RAM • 256GB SSD",
+      "Pantalla 14\"",
+      "Wi-Fi • Bluetooth • HDMI • USB",
+      "Windows listo para uso (según disponibilidad)"
+    ],
+    "marca": "HP",
+    "modelo": "14-ck0011la",
+    "promoId": "#PROMOREF650",
+    "stockLima": 1
+  },
+  {
+    "id": "ref-len-l470-i5-7gen-8-256",
+    "cat": "refurb",
+    "segmento": "refurb",
+    "nombre": "Lenovo ThinkPad L470 • 14\" • Core i5 7ª • 8GB • 256GB (Refurb)",
+    "precioNum": 690,
+    "img": "img/refurb/len-l470-i5-7gen-8-256-14-1.jpg",
+    "imgs": [
+      "img/refurb/len-l470-i5-7gen-8-256-14-1.jpg",
+      "img/refurb/len-l470-i5-7gen-8-256-14-2.jpg",
+      "img/refurb/len-l470-i5-7gen-8-256-14-3.jpg"
+    ],
+    "desc": "ThinkPad robusto para oficina. Grado B.",
+    "detalles": "Estado: grado B (sin roturas ni reparaciones). Incluye cargador. Garantía 6 meses.",
+    "specs": [
+      "Intel Core i5 7ª generación",
+      "8GB RAM • 256GB SSD",
+      "Pantalla 14\"",
+      "Wi-Fi • BT • HDMI/DP (según configuración)",
+      "Teclado resistente ThinkPad"
+    ],
+    "marca": "Lenovo",
+    "modelo": "ThinkPad L470",
+    "promoId": "#PROMOREF690",
+    "stockLima": 1
+  },
+  {
+    "id": "ref-dell-5480-i5-7gen-16-512-nv2g",
+    "cat": "refurb",
+    "segmento": "refurb",
+    "nombre": "Dell Latitude 5480 • 14\" • Core i5 7ª • 16GB • 512GB • NVIDIA 2GB (Refurb)",
+    "precioNum": 950,
+    "img": "img/refurb/dell-5480-i5-7gen-16-512-14-nv2g-1.jpg",
+    "imgs": [
+      "img/refurb/dell-5480-i5-7gen-16-512-14-nv2g-1.jpg",
+      "img/refurb/dell-5480-i5-7gen-16-512-14-nv2g-2.jpg",
+      "img/refurb/dell-5480-i5-7gen-16-512-14-nv2g-3.jpg"
+    ],
+    "desc": "Latitude 14\" con gráfica dedicada 2GB. Grado B.",
+    "detalles": "Incluye cargador genérico. Garantía 6 meses.",
+    "specs": [
+      "Intel Core i5 7ª generación",
+      "16GB RAM • 512GB SSD",
+      "Pantalla 14\"",
+      "NVIDIA 2GB dedicada",
+      "Wi-Fi • BT • HDMI • USB-C/USB 3.0"
+    ],
+    "marca": "Dell",
+    "modelo": "Latitude 5480",
+    "promoId": "#PROMOREF950A",
+    "stockLima": 1
+  },
+  {
+    "id": "ref-len-t480-i5-8gen-16-512",
+    "cat": "refurb",
+    "segmento": "refurb",
+    "nombre": "Lenovo ThinkPad T480 • 14\" • Core i5 8ª • 16GB • 512GB (Refurb)",
+    "precioNum": 950,
+    "img": "img/refurb/len-t480-i5-8gen-16-512-14-1.jpg",
+    "imgs": [
+      "img/refurb/len-t480-i5-8gen-16-512-14-1.jpg",
+      "img/refurb/len-t480-i5-8gen-16-512-14-2.jpg",
+      "img/refurb/len-t480-i5-8gen-16-512-14-3.jpg"
+    ],
+    "desc": "ThinkPad T-series para trabajo exigente. Grado B.",
+    "detalles": "Incluye cargador. Garantía 6 meses.",
+    "specs": [
+      "Intel Core i5 8ª generación",
+      "16GB RAM • 512GB SSD",
+      "Pantalla 14\"",
+      "Wi-Fi • BT • USB-C/Thunderbolt (según config.) • HDMI",
+      "Teclado ThinkPad • chasis magnesio"
+    ],
+    "marca": "Lenovo",
+    "modelo": "ThinkPad T480",
+    "promoId": "#PROMOREF950B",
+    "stockLima": 1
+  },
+  {
+    "id": "ref-len-t490-i7-8gen-16-512-touch",
+    "cat": "refurb",
+    "segmento": "refurb",
+    "nombre": "Lenovo ThinkPad T490 • 14\" táctil • Core i7 8ª • 16GB • 512GB (Refurb)",
+    "precioNum": 1390,
+    "img": "img/refurb/len-t490-i7-8gen-16-512-touch-14-1.jpg",
+    "imgs": [
+      "img/refurb/len-t490-i7-8gen-16-512-touch-14-1.jpg",
+      "img/refurb/len-t490-i7-8gen-16-512-touch-14-2.jpg",
+      "img/refurb/len-t490-i7-8gen-16-512-touch-14-3.jpg"
+    ],
+    "desc": "Ultrabook ThinkPad con pantalla táctil. Grado A.",
+    "detalles": "Estado: grado A (sin roturas ni reparaciones). Cargador incluido. Garantía 6 meses.",
+    "specs": [
+      "Intel Core i7 8ª generación",
+      "16GB RAM • 512GB SSD",
+      "Pantalla 14\" táctil",
+      "Wi-Fi • BT • USB-C/Thunderbolt • HDMI",
+      "Seguridad TPM • lector huella (según config.)"
+    ],
+    "marca": "Lenovo",
+    "modelo": "ThinkPad T490",
+    "promoId": "#PROMOREF1390",
+    "stockLima": 2
+  },
+  {
+    "id": "ref-dell-3410-i7-10gen-16-512",
+    "cat": "refurb",
+    "segmento": "refurb",
+    "nombre": "Dell Latitude 3410 • 14\" • Core i7 10ª • 16GB • 512GB (Refurb)",
+    "precioNum": 1450,
+    "img": "img/refurb/dell-3410-i7-10gen-16-512-14-1.jpg",
+    "imgs": [
+      "img/refurb/dell-3410-i7-10gen-16-512-14-1.jpg",
+      "img/refurb/dell-3410-i7-10gen-16-512-14-2.jpg",
+      "img/refurb/dell-3410-i7-10gen-16-512-14-3.jpg"
+    ],
+    "desc": "Latitude 14\" de 10ª gen, listo para oficina. Grado A.",
+    "detalles": "Incluye cargador genérico. Garantía 6 meses.",
+    "specs": [
+      "Intel Core i7 10ª generación",
+      "16GB RAM • 512GB SSD",
+      "Pantalla 14\"",
+      "Wi-Fi • BT • HDMI • USB-C/USB 3.2",
+      "Chasis empresarial Latitude"
+    ],
+    "marca": "Dell",
+    "modelo": "Latitude 3410",
+    "promoId": "#PROMOREF1450",
+    "stockLima": 1
+  }
+]
