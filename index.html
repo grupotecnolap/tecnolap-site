@@ -325,6 +325,7 @@
     <div class="modal__overlay" onclick="closeProduct()"></div>
     <div class="modal__box">
       <button class="modal__close" aria-label="Cerrar" onclick="closeProduct()">✕</button>
+
       <div class="modal__left">
         <div class="gallery" id="gal">
           <span id="galOffer" class="offerRibbon" style="display:none">OFERTA</span>
@@ -334,6 +335,7 @@
         </div>
         <div class="thumbs" id="galThumbs"></div>
       </div>
+
       <div class="modal__right">
         <h3 id="pdName"></h3>
         <div class="mini" id="pdRef"></div>
@@ -341,9 +343,21 @@
         <div style="font-weight:800;margin:6px 0 10px" id="pdPrice"></div>
         <p id="pdDetalles"></p>
         <ul id="pdSpecs" class="mini" style="margin:10px 0 16px;line-height:1.5"></ul>
+
         <div class="cta">
           <button class="btn" id="pdAdd">Agregar al carrito</button>
           <a class="pill" id="pdWA" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
+          <button class="pill" id="pdShare" type="button">Compartir</button>
+        </div>
+
+        <!-- fila de redes (fallback si no hay Web Share API) -->
+        <div id="shareRow" class="mini" style="display:none; margin-top:8px; gap:8px; flex-wrap:wrap">
+          <a id="shareWA" class="pill" target="_blank" rel="noopener">🟢 WhatsApp</a>
+          <a id="shareFB" class="pill" target="_blank" rel="noopener">🔵 Facebook</a>
+          <a id="shareTG" class="pill" target="_blank" rel="noopener">✈️ Telegram</a>
+          <a id="shareTW" class="pill" target="_blank" rel="noopener">𝕏 Twitter</a>
+          <a id="shareMail" class="pill">✉️ Email</a>
+          <button id="shareCopy" class="pill" type="button">🔗 Copiar enlace</button>
         </div>
       </div>
     </div>
@@ -368,16 +382,21 @@
 
   <script>
   // ====== CONTACTO ======
+  const WA_SHORT_LINK = 'https://wa.me/message/NUUZ457ITA2RB1';
   const WA_PHONE = '51912811769';
   const TEL_SHOW = '+51 912 811 769';
   const MAIL = 'ventas@grupotecnolap.com';
 
   document.getElementById('telMostrar').textContent = TEL_SHOW;
   document.getElementById('mailMostrar').textContent = MAIL;
+
   const waLink = (msg='Hola Tecnolap, quiero una cotización') =>
-    `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(msg)}`;
-  document.getElementById('cta-whatsapp').href = waLink();
-  document.getElementById('cta-whatsapp-2').href = waLink();
+    (WA_SHORT_LINK && WA_SHORT_LINK.length)
+      ? `${WA_SHORT_LINK}?text=${encodeURIComponent(msg)}`
+      : `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(msg)}`;
+
+  document.getElementById('cta-whatsapp').href  = waLink();
+  document.getElementById('cta-whatsapp-2').href= waLink();
   document.getElementById('cta-mail').href =
     `mailto:${MAIL}?subject=Cotización%20Tecnolap&body=Hola,%20necesito%20cotización.`;
 
@@ -560,6 +579,7 @@
         <div style="display:flex;gap:8px">
           <button type="button" class="pill" onclick="openProduct('${p.id}')">Ver detalles</button>
           <button type="button" class="pill" ${inStock ? '' : 'disabled'} onclick="addToCart('${p.id}')">Agregar</button>
+          <button type="button" class="pill" onclick="shareProduct('${p.id}')">Compartir</button>
         </div>
       </div>
     </div>`;
@@ -612,6 +632,7 @@
     byId('pdSpecs').innerHTML = (p.specs || []).map(s=>`<li>• ${s}</li>`).join('');
     byId('pdWA').href = waLink(`Hola, me interesa ${p.nombre} (${p.precio||''})${ref ? ' [REF: ' + ref + ']' : ''}. ¿Disponibilidad y entrega?`);
     byId('pdAdd').onclick = ()=>addToCart(p.id, 1, true);
+    byId('pdShare').onclick = ()=>shareProduct(p.id);
 
     const imgs = (p.imgs && p.imgs.length) ? p.imgs : [p.img];
     GALIDX=0; const main=byId('galMain'), thumbs=byId('galThumbs');
